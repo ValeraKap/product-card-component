@@ -16,17 +16,20 @@
 %}
 
 {% if product == blank %}
-  <article class="assessment-product-card" aria-hidden="true">
-    <div class="assessment-image-panel">
-      <div class="assessment-media-frame">
-        {{ 'product-apparel-1' | placeholder_svg_tag: 'assessment-primary-image' }}
+  <article
+    class="assessment-product-card relative flex w-full max-w-[315px] flex-col items-start gap-[15px] p-0 text-[#111111]"
+    aria-hidden="true"
+  >
+    <div class="assessment-image-panel relative box-border h-[340px] w-full overflow-hidden rounded-[10px] border bg-white">
+      <div class="assessment-media-frame relative block h-full w-full">
+        {{ 'product-apparel-1' | placeholder_svg_tag: 'absolute inset-0 h-full w-full object-contain p-[20px]' }}
       </div>
     </div>
-    <div class="mt-5 space-y-2">
-      <p class="text-[clamp(1.05rem,1.8vw,1.5rem)] leading-[1.25] text-[#1f1f1f]">
+    <div class="flex w-[246px] flex-col items-start gap-2">
+      <p class="text-[14px] font-normal leading-[16px] text-[#111111]" style="font-family: Roboto, sans-serif;">
         Demo Brand
       </p>
-      <p class="m-0 text-[clamp(1.45rem,3vw,2.3rem)] font-semibold leading-[1.05] text-[#0f4467]">
+      <p class="m-0 text-[16px] font-medium leading-[18px] text-[#0A4874]" style="font-family: Roboto, sans-serif;">
         {{ 'content.product_card_placeholder' | t }}
       </p>
     </div>
@@ -110,28 +113,47 @@
       when 2
         assign selected_color_value = selected_variant.option3
     endcase
+
+    assign display_heading = product.title
+    if product.metafields.custom.card_brand != blank
+      assign display_heading = product.metafields.custom.card_brand.value
+    endif
+
+    assign display_title = product.title
+    if product.metafields.custom.card_title != blank
+      assign display_title = product.metafields.custom.card_title.value
+    elsif product.metafields.custom.subtitle != blank
+      assign display_title = product.metafields.custom.subtitle.value
+    elsif product.type != blank
+      assign display_title = product.type
+    endif
   %}
 
   <article
     id="{{ card_id }}"
-    class="assessment-product-card"
+    class="assessment-product-card relative flex w-full max-w-[315px] flex-col items-start gap-[15px] p-0 text-[#111111]"
     data-assessment-product-card
     data-product-id="{{ product.id }}"
     data-selected-variant-id="{{ selected_variant.id }}"
     data-on-sale="{% if selected_on_sale %}true{% else %}false{% endif %}"
   >
-    <div class="assessment-image-panel">
-      <p class="assessment-sale-badge" data-sale-badge>On Sale!</p>
+    <div class="assessment-image-panel relative box-border h-[340px] w-full overflow-hidden rounded-[10px] border bg-white">
+      <p
+        class="assessment-sale-badge absolute left-5 top-5 z-20 box-border flex h-[29.45px] min-w-[90.91px] items-center justify-center rounded-[25.6098px] border px-[12.8049px] py-[6.4024px] text-center font-normal"
+        data-sale-badge
+      >
+        On Sale!
+      </p>
 
       <a
         href="{{ selected_variant.url }}"
-        class="assessment-media-frame focus-visible:outline-none"
+        class="assessment-media-frame relative block h-full w-full focus-visible:outline-none"
         data-product-link
         aria-label="{{ product.title | escape }}"
       >
         {% if selected_primary != blank %}
           <img
-            class="assessment-primary-image{% if selected_secondary != blank %} has-secondary{% endif %}"
+            class="absolute inset-0 h-full w-full object-contain p-[20px]{% if selected_secondary != blank %} has-secondary{% endif %}"
             data-primary-image
             src="{{ selected_primary | image_url: width: 900 }}"
             alt="{{ selected_primary.alt | default: product.title | escape }}"
@@ -140,12 +162,12 @@
             loading="lazy"
           >
         {% else %}
-          {{ 'product-apparel-1' | placeholder_svg_tag: 'assessment-primary-image' }}
+          {{ 'product-apparel-1' | placeholder_svg_tag: 'absolute inset-0 h-full w-full object-contain p-[20px]' }}
         {% endif %}
 
         {% if secondary_fallback != blank %}
           <img
-            class="assessment-secondary-image{% if selected_secondary == blank %} hidden{% endif %}"
+            class="absolute inset-0 h-full w-full object-contain p-[20px]{% if selected_secondary == blank %} hidden{% endif %}"
             data-secondary-image
             src="{{ secondary_fallback | image_url: width: 900 }}"
             alt="{{ selected_secondary.alt | default: product.title | escape }}"
@@ -158,7 +180,11 @@
     </div>
 
     {% if color_option != blank %}
-      <div class="mt-5 flex flex-wrap items-center gap-3" role="list" aria-label="{{ color_option.name | escape }}">
+      <div
+        class="flex h-5 w-[160px] flex-nowrap items-center gap-2"
+        role="list"
+        aria-label="{{ color_option.name | escape }}"
+      >
         {% assign swatch_option_key = 'option' | append: color_option.position %}
         {% for option_value in color_option.values %}
           {% liquid
@@ -221,7 +247,7 @@
 
           <button
             type="button"
-            class="assessment-swatch"
+            class="assessment-swatch relative flex h-5 w-5 items-center justify-center rounded-full bg-white p-[1px] transition-shadow duration-200 ease-out focus-visible:outline-none"
             role="listitem"
             aria-label="{{ option_value.name | escape }}"
             aria-pressed="{% if is_active %}true{% else %}false{% endif %}"
@@ -230,33 +256,46 @@
             data-active="{% if is_active %}true{% else %}false{% endif %}"
           >
             <span
-              class="assessment-swatch-core"
-              style="--assessment-swatch-bg: {{ swatch_background }};"
+              class="assessment-swatch-core block h-full w-full rounded-full"
+              style="background: {{ swatch_background }}; background-size: cover; background-position: center; background-repeat: no-repeat;"
             ></span>
           </button>
         {% endfor %}
       </div>
     {% endif %}
 
-    <div class="mt-5 space-y-2">
-      <p class="text-[clamp(1.05rem,1.8vw,1.5rem)] leading-[1.25] text-[#1f1f1f]">
-        {{ product.vendor }}
-      </p>
-      <h3 class="m-0">
-        <a
-          href="{{ selected_variant.url }}"
-          class="text-[clamp(1.45rem,3vw,2.3rem)] font-semibold leading-[1.05] text-[#0f4467] no-underline hover:underline focus-visible:underline"
-          data-product-link
-        >
-          {{ product.title }}
-        </a>
-      </h3>
+    <div class="flex w-[246px] flex-col items-start gap-2">
+      <div class="flex w-[246px] flex-col items-start gap-[6px]">
+        <p class="m-0 text-[14px] font-normal leading-[16px] text-[#111111]" style="font-family: Roboto, sans-serif;">
+          {{ display_heading }}
+        </p>
+        <h3 class="m-0">
+          <a
+            href="{{ selected_variant.url }}"
+            class="assessment-product-title text-[16px] font-medium leading-[18px] text-[#0A4874] no-underline hover:underline focus-visible:underline"
+            style="font-family: Roboto, sans-serif;"
+            data-product-link
+          >
+            {{ display_title }}
+          </a>
+        </h3>
+      </div>
 
-      <p class="mt-2 flex flex-wrap items-end gap-x-4 gap-y-2">
-        <span class="assessment-compare-price" data-compare-price>
+      <p class="assessment-price-row m-0 flex items-start gap-2">
+        <span
+          class="assessment-compare-price text-[14px] font-normal leading-[16px] text-[#111111] line-through"
+          style="font-family: Roboto, sans-serif;"
+          data-compare-price
+        >
           {% if selected_on_sale %}{{ selected_variant.compare_at_price | money }}{% endif %}
         </span>
-        <span class="assessment-current-price" data-current-price>{{ selected_variant.price | money }}</span>
+        <span
+          class="assessment-current-price text-[14px] font-normal leading-[16px] text-[#111111]"
+          style="font-family: Roboto, sans-serif;"
+          data-current-price
+        >
+          {{ selected_variant.price | money }}
+        </span>
       </p>
     </div>
 

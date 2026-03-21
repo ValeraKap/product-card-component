@@ -3,106 +3,101 @@
 @tailwind utilities;
 
 @layer components {
-  .assessment-product-card {
-    @apply relative w-full bg-[#efefef] p-4 text-[#1f1f1f] sm:p-5;
-  }
-
   .assessment-image-panel {
-    @apply relative overflow-hidden rounded-[18px] border border-[#d4d4d4] bg-[#f4f4f4];
+    border: 1px solid #cfcfcf;
+    background: #efefef;
   }
 
   .assessment-sale-badge {
-    @apply pointer-events-none absolute left-5 top-5 z-20 hidden items-center rounded-full border border-[#ff0000] px-5 py-2 text-[20px] font-normal leading-none text-[#ff0000];
-  }
-
-  .assessment-product-card[data-on-sale='true'] .assessment-sale-badge {
-    @apply inline-flex;
-  }
-
-  .assessment-product-card[data-on-sale='false'] .assessment-sale-badge {
-    @apply hidden;
-  }
-
-  .assessment-media-frame {
-    @apply relative block aspect-[4/5] w-full overflow-hidden;
-  }
-
-  .assessment-primary-image,
-  .assessment-secondary-image {
-    @apply absolute inset-0 h-full w-full object-contain transition-opacity duration-300 ease-out;
-  }
-
-  .assessment-secondary-image {
-    @apply opacity-0;
-  }
-
-  .assessment-media-frame:hover .assessment-secondary-image,
-  .assessment-media-frame:focus-visible .assessment-secondary-image,
-  .assessment-media-frame:focus-within .assessment-secondary-image {
-    @apply opacity-100;
-  }
-
-  .assessment-media-frame:hover .assessment-primary-image.has-secondary,
-  .assessment-media-frame:focus-visible .assessment-primary-image.has-secondary,
-  .assessment-media-frame:focus-within .assessment-primary-image.has-secondary {
-    @apply opacity-0;
-  }
-
-  @media (hover: none) {
-    .assessment-media-frame:hover .assessment-secondary-image,
-    .assessment-media-frame:focus-visible .assessment-secondary-image,
-    .assessment-media-frame:focus-within .assessment-secondary-image {
-      @apply opacity-0;
-    }
-
-    .assessment-media-frame:hover .assessment-primary-image.has-secondary,
-    .assessment-media-frame:focus-visible .assessment-primary-image.has-secondary,
-    .assessment-media-frame:focus-within .assessment-primary-image.has-secondary {
-      @apply opacity-100;
-    }
+    border: 1px solid #ff0000;
+    background: #ffffff;
+    color: #ff0000;
+    font-family: 'Franklin Gothic ATF', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 15.3659px;
+    line-height: 18px;
   }
 
   .assessment-swatch {
-    @apply relative flex h-9 w-9 items-center justify-center rounded-full border border-transparent p-0 transition-shadow duration-200 ease-out;
-  }
-
-  .assessment-swatch[data-active='true'] {
-    box-shadow: 0 0 0 2px #0a699f;
+    border: 1px solid #111111;
+    background: #ffffff;
   }
 
   .assessment-swatch-core {
-    @apply block h-8 w-8 rounded-full border border-transparent;
-    background: var(--assessment-swatch-bg, #d1d5db);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    border-radius: 9999px;
+  }
+
+  .assessment-swatch[data-active='true'] {
+    border-color: #111111;
+    box-shadow: 0 0 0 2px #0a4874;
   }
 
   .assessment-swatch:focus-visible {
-    @apply outline-none ring-2 ring-[#0a699f] ring-offset-2 ring-offset-[#efefef];
+    box-shadow: 0 0 0 2px #0a4874;
   }
 
-  .assessment-swatch[data-active='true'] .assessment-swatch-core {
-    box-shadow: inset 0 0 0 2px #ffffff;
+  .assessment-product-title {
+    font-family: Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 500;
   }
 
-  .assessment-compare-price {
-    @apply text-[44px] leading-none text-[#1f1f1f] line-through decoration-[1.5px] decoration-[#1f1f1f];
+  .assessment-price-row {
+    font-family: Roboto, sans-serif;
   }
 
+  .assessment-compare-price,
   .assessment-current-price {
-    @apply text-[44px] leading-none text-[#1f1f1f];
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 400;
   }
 
-  .assessment-product-card[data-on-sale='true'] .assessment-compare-price {
-    @apply inline;
+  [data-assessment-product-card][data-on-sale='false'] [data-sale-badge] {
+    display: none;
   }
 
-  .assessment-product-card[data-on-sale='false'] .assessment-compare-price {
-    @apply hidden;
+  [data-assessment-product-card][data-on-sale='false'] [data-compare-price] {
+    display: none;
   }
 
-  .assessment-product-card[data-on-sale='true'] .assessment-current-price {
-    @apply text-[#ff0000];
+  [data-assessment-product-card][data-on-sale='true'] [data-current-price] {
+    color: #ff0000;
+  }
+
+  [data-assessment-product-card] [data-primary-image],
+  [data-assessment-product-card] [data-secondary-image] {
+    transition: opacity 0.3s ease-out;
+  }
+
+  [data-assessment-product-card] [data-secondary-image] {
+    opacity: 0;
+  }
+
+  [data-assessment-product-card] .assessment-media-frame:hover [data-secondary-image],
+  [data-assessment-product-card] .assessment-media-frame:focus-visible [data-secondary-image],
+  [data-assessment-product-card] .assessment-media-frame:focus-within [data-secondary-image] {
+    opacity: 1;
+  }
+
+  [data-assessment-product-card] .assessment-media-frame:hover [data-primary-image].has-secondary,
+  [data-assessment-product-card] .assessment-media-frame:focus-visible [data-primary-image].has-secondary,
+  [data-assessment-product-card] .assessment-media-frame:focus-within [data-primary-image].has-secondary {
+    opacity: 0;
+  }
+
+  @media (hover: none) {
+    [data-assessment-product-card] .assessment-media-frame:hover [data-secondary-image],
+    [data-assessment-product-card] .assessment-media-frame:focus-visible [data-secondary-image],
+    [data-assessment-product-card] .assessment-media-frame:focus-within [data-secondary-image] {
+      opacity: 0;
+    }
+
+    [data-assessment-product-card] .assessment-media-frame:hover [data-primary-image].has-secondary,
+    [data-assessment-product-card] .assessment-media-frame:focus-visible [data-primary-image].has-secondary,
+    [data-assessment-product-card] .assessment-media-frame:focus-within [data-primary-image].has-secondary {
+      opacity: 1;
+    }
   }
 }
