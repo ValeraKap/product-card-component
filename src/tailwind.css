@@ -65,12 +65,35 @@
     border: 0;
     padding: 0;
     background: transparent;
+    transition: transform 180ms ease;
+    will-change: transform;
   }
 
   .assessment-swatch-core {
     width: 20px;
     height: 20px;
     border-radius: 9999px;
+    transition: box-shadow 180ms ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .assessment-swatch:not([data-active='true']):hover,
+    .assessment-swatch:not([data-active='true']):focus-visible {
+      animation: swatchPulse 1.2s ease-in-out infinite;
+    }
+
+    .assessment-swatch:not([data-active='true']):hover .assessment-swatch-core,
+    .assessment-swatch:not([data-active='true']):focus-visible .assessment-swatch-core {
+      box-shadow: 0 0 0 2px rgba(10, 72, 116, 0.18);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .assessment-swatch:not([data-active='true']):hover,
+    .assessment-swatch:not([data-active='true']):focus-visible {
+      animation: none;
+      transform: none;
+    }
   }
 
   .assessment-swatch[data-active='true'] {
@@ -85,6 +108,20 @@
     border: 1px solid #0a4874;
     border-radius: 9999px;
     pointer-events: none;
+  }
+
+  @keyframes swatchPulse {
+    0% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.08);
+    }
+
+    100% {
+      transform: scale(1);
+    }
   }
 
   .assessment-product-title {
