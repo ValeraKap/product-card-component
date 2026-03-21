@@ -165,8 +165,8 @@
 }
 
 .assessment-image-panel {
-  border: 1px solid #cfcfcf;
-  background: #efefef;
+  border: 1px solid #e8e8e8;
+  background: #ffffff;
 }
 
 .assessment-sale-badge {
@@ -174,26 +174,38 @@
   background: #ffffff;
   color: #ff0000;
   font-family: 'Franklin Gothic ATF', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  font-size: 15.3659px;
+  font-size: 16.5px;
   line-height: 18px;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
 .assessment-swatch {
-  border: 1px solid #111111;
-  background: #ffffff;
+  width: 20px;
+  height: 20px;
+  border: 0;
+  padding: 0;
+  background: transparent;
 }
 
 .assessment-swatch-core {
+  width: 20px;
+  height: 20px;
   border-radius: 9999px;
 }
 
 .assessment-swatch[data-active='true'] {
-  border-color: #111111;
-  box-shadow: 0 0 0 2px #0a4874;
+  position: relative;
 }
 
-.assessment-swatch:focus-visible {
-  box-shadow: 0 0 0 2px #0a4874;
+.assessment-swatch[data-active='true']::after,
+  .assessment-swatch:focus-visible::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border: 1px solid #0a4874;
+  border-radius: 9999px;
+  pointer-events: none;
 }
 
 .assessment-product-title {
@@ -314,6 +326,45 @@
   margin: 0px;
 }
 
+.m-1 {
+  margin: 0.25rem;
+}
+
+.my-0 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.my-10 {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.-my-16 {
+  margin-top: -4rem;
+  margin-bottom: -4rem;
+}
+
+.my-16 {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}
+
+.my-6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.my-2 {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.my-1 {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
 .box-border {
   box-sizing: border-box;
 }
@@ -378,12 +429,12 @@
   width: 246px;
 }
 
-.w-full {
-  width: 100%;
+.w-\[90\.91px\] {
+  width: 90.91px;
 }
 
-.min-w-\[90\.91px\] {
-  min-width: 90.91px;
+.w-full {
+  width: 100%;
 }
 
 .max-w-\[315px\] {
@@ -446,8 +497,8 @@
   gap: 15px;
 }
 
-.gap-\[6px\] {
-  gap: 6px;
+.gap-\[2px\] {
+  gap: 2px;
 }
 
 .overflow-hidden {
@@ -484,6 +535,10 @@
   border-width: 1px;
 }
 
+.bg-transparent {
+  background-color: transparent;
+}
+
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
@@ -498,17 +553,13 @@
   padding: 0px;
 }
 
-.p-\[1px\] {
-  padding: 1px;
-}
-
 .p-\[20px\] {
   padding: 20px;
 }
 
-.px-\[12\.8049px\] {
-  padding-left: 12.8049px;
-  padding-right: 12.8049px;
+.px-\[13\.8049px\] {
+  padding-left: 13.8049px;
+  padding-right: 13.8049px;
 }
 
 .py-\[6\.4024px\] {
@@ -544,6 +595,10 @@
   font-weight: 400;
 }
 
+.font-semibold {
+  font-weight: 600;
+}
+
 .uppercase {
   text-transform: uppercase;
 }
@@ -562,6 +617,18 @@
 
 .leading-\[18px\] {
   line-height: 18px;
+}
+
+.tracking-\[-0\.15px\] {
+  letter-spacing: -0.15px;
+}
+
+.tracking-tighter {
+  letter-spacing: -0.05em;
+}
+
+.tracking-tight {
+  letter-spacing: -0.025em;
 }
 
 .text-\[\#0A4874\] {
@@ -627,22 +694,8 @@
   transition-duration: 150ms;
 }
 
-.transition-shadow {
-  transition-property: box-shadow;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-.duration-200 {
-  transition-duration: 200ms;
-}
-
 .ease-in-out {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.ease-out {
-  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
 
 .hover\:underline:hover {

@@ -4,8 +4,8 @@
 
 @layer components {
   .assessment-image-panel {
-    border: 1px solid #cfcfcf;
-    background: #efefef;
+    border: 1px solid #e8e8e8;
+    background: #ffffff;
   }
 
   .assessment-sale-badge {
@@ -13,26 +13,38 @@
     background: #ffffff;
     color: #ff0000;
     font-family: 'Franklin Gothic ATF', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 15.3659px;
+    font-size: 16.5px;
     line-height: 18px;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
   }
 
   .assessment-swatch {
-    border: 1px solid #111111;
-    background: #ffffff;
+    width: 20px;
+    height: 20px;
+    border: 0;
+    padding: 0;
+    background: transparent;
   }
 
   .assessment-swatch-core {
+    width: 20px;
+    height: 20px;
     border-radius: 9999px;
   }
 
   .assessment-swatch[data-active='true'] {
-    border-color: #111111;
-    box-shadow: 0 0 0 2px #0a4874;
+    position: relative;
   }
 
-  .assessment-swatch:focus-visible {
-    box-shadow: 0 0 0 2px #0a4874;
+  .assessment-swatch[data-active='true']::after,
+  .assessment-swatch:focus-visible::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border: 1px solid #0a4874;
+    border-radius: 9999px;
+    pointer-events: none;
   }
 
   .assessment-product-title {

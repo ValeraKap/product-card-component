@@ -159,7 +159,7 @@
   >
     <div class="assessment-image-panel relative box-border h-[340px] w-full overflow-hidden rounded-[10px] border bg-white">
       <p
-        class="assessment-sale-badge absolute left-5 top-5 z-20 box-border flex h-[29.45px] min-w-[90.91px] items-center justify-center rounded-[25.6098px] border px-[12.8049px] py-[6.4024px] text-center font-normal"
+        class="assessment-sale-badge absolute left-5 top-5 z-20 box-border flex h-[29.45px] w-[90.91px] items-center justify-center rounded-[25.6098px] border px-[13.8049px] py-[6.4024px] text-center font-normal"
         data-sale-badge
       >
         {{ sale_badge_text }}
@@ -200,11 +200,8 @@
     </div>
 
     {% if color_option != blank %}
-      <div
-        class="flex h-5 w-[160px] flex-nowrap items-center gap-2"
-        role="list"
-        aria-label="{{ color_option.name | escape }}"
-      >
+      <div class="flex h-5 w-[160px] items-center p-0" role="list" aria-label="{{ color_option.name | escape }}">
+        <div class="flex h-5 w-[160px] flex-nowrap items-start gap-2 p-0">
         {% assign swatch_option_key = 'option' | append: color_option.position %}
         {% for option_value in color_option.values %}
           {% liquid
@@ -267,7 +264,7 @@
 
           <button
             type="button"
-            class="assessment-swatch relative flex h-5 w-5 items-center justify-center rounded-full bg-white p-[1px] transition-shadow duration-200 ease-out focus-visible:outline-none"
+            class="assessment-swatch relative flex h-5 w-5 items-center justify-center rounded-full bg-transparent p-0 focus-visible:outline-none"
             role="listitem"
             aria-label="{{ option_value.name | escape }}"
             aria-pressed="{% if is_active %}true{% else %}false{% endif %}"
@@ -281,18 +278,19 @@
             ></span>
           </button>
         {% endfor %}
+        </div>
       </div>
     {% endif %}
 
-    <div class="flex w-[246px] flex-col items-start gap-2">
-      <div class="flex w-[246px] flex-col items-start gap-[6px]">
-        <p class="m-0 text-[14px] font-normal leading-[16px] text-[#111111]" style="font-family: Roboto, sans-serif;">
+    <div class="flex w-[246px] flex-col items-start gap-[2px]">
+      <div class="flex w-[246px] flex-col items-start gap-[2px]">
+        <p class="m-0 text-[14px] font-normal leading-[16px] text-[#111111] tracking-tight" style="font-family: Roboto, sans-serif;">
           {{ display_heading }}
         </p>
-        <h3 class="m-0">
+        <h3 class="my-1 text-[16px]">
           <a
             href="{{ selected_variant.url }}"
-            class="assessment-product-title text-[16px] font-medium leading-[18px] text-[#0A4874] no-underline hover:underline focus-visible:underline"
+            class="assessment-product-title text-[16px] tracking-tight font-semibold leading-[18px] text-[#0A4874] no-underline hover:underline focus-visible:underline"
             style="font-family: Roboto, sans-serif;"
             data-product-link
           >
@@ -301,7 +299,7 @@
         </h3>
       </div>
 
-      <p class="assessment-price-row m-0 flex items-start gap-2">
+      <p class="assessment-price-row my-1 flex items-start gap-2">
         <span
           class="assessment-compare-price text-[14px] font-normal leading-[16px] text-[#111111] line-through"
           style="font-family: Roboto, sans-serif;"
