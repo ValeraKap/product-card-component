@@ -9,14 +9,16 @@ Custom Shopify product card built from scratch in Dawn with TailwindCSS.
   - `custom.sale_badge_text` (single line text): `Sale!` (default), examples: `Limited Offer`, `Final Sale`
   - `custom.sale_badge_mode` (single line text): `default`, `force_show`, `force_hide`
   - `custom.sale_badge_enabled` (boolean, legacy fallback): manual/forced badge activation even if there is no `compare_at_price` when mode is `default`
-- Variant swatches update selected variant image, secondary hover image, URL, and price.
+- Variant swatches support desktop hover preview and click-to-commit behavior:
+  - hover on desktop previews variant image/price/url
+  - click fixes the selected variant state
 - Product text supports display fallbacks for heading/title (including product type and optional metafields).
 - `Plain T-shirt` is currently sourced from `Product type`; if needed, this can be overridden via metafields.
 
 ## Implemented User Stories
 
 - Sale state: displays `On Sale!` badge and markdown price (`compare_at_price` + sale price).
-- Variant swatches: clicking a color swatch switches variant imagery, URL, and pricing.
+- Variant swatches: hover previews a variant on desktop, and click switches/fixes variant imagery, URL, and pricing.
 - Variant hover image: hover over card image shows the secondary image for the selected variant.
 - Product info: brand (`product.vendor`), title, and pricing are rendered on every card.
 
@@ -26,6 +28,13 @@ Custom Shopify product card built from scratch in Dawn with TailwindCSS.
 - Liquid snippets and blocks
 - TailwindCSS (compiled to `assets/tailwind.css`)
 - Vanilla JS module for client-side variant switching
+
+## Styling Approach
+
+- The card is built primarily with Tailwind utility classes in Liquid markup.
+- A small set of reusable component classes is defined in `src/tailwind.css` (`@layer components`) and compiled into `assets/tailwind.css`.
+- These classes are used for pixel-perfect Figma values, repeated style tokens, and stateful selectors/pseudo-elements (`:hover`, `:focus-visible`, active swatch ring, line clamp).
+- This keeps the Liquid template cleaner and avoids overloading markup with long duplicated utility strings while still staying within a Tailwind workflow.
 
 ## Local Setup
 

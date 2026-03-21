@@ -54,6 +54,29 @@
     font-weight: 500;
   }
 
+  .assessment-vendor-line {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .assessment-product-title-wrap {
+    display: -webkit-box;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    word-break: break-word;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
   .assessment-price-row {
     font-family: Roboto, sans-serif;
   }
