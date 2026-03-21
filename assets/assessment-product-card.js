@@ -35,6 +35,8 @@ function setVariant(card, variantId) {
 
   card.dataset.selectedVariantId = String(variant.id);
   card.dataset.onSale = variant.onSale ? 'true' : 'false';
+  const manualSaleBadgeEnabled = card.dataset.manualSaleBadge === 'true';
+  card.dataset.saleBadgeVisible = variant.onSale || manualSaleBadgeEnabled ? 'true' : 'false';
 
   const productLinks = card.querySelectorAll(LINK_SELECTOR);
   for (const link of productLinks) {

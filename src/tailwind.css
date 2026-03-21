@@ -54,7 +54,7 @@
     font-weight: 400;
   }
 
-  [data-assessment-product-card][data-on-sale='false'] [data-sale-badge] {
+  [data-assessment-product-card][data-sale-badge-visible='false'] [data-sale-badge] {
     display: none;
   }
 
