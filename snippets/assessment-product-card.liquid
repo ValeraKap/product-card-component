@@ -1,0 +1,322 @@
+{%- doc -%}
+  Renders sale badge, variant swatches, hover secondary image, brand, title, and pricing.
+
+  @param {object} product - Product object
+  @param {object} [block] - Optional block object
+{%- enddoc -%}
+
+{% liquid
+  assign product = product | default: closest.product
+
+  if block and block.id
+    assign card_id = 'assessment-product-card-' | append: block.id | append: '-' | append: product.id
+  else
+    assign card_id = 'assessment-product-card-' | append: product.id
+  endif
+%}
+
+{% if product == blank %}
+  <article class="assessment-product-card" aria-hidden="true">
+    <div class="assessment-image-panel">
+      <div class="assessment-media-frame">
+        {{ 'product-apparel-1' | placeholder_svg_tag: 'assessment-primary-image' }}
+      </div>
+    </div>
+    <div class="mt-5 space-y-2">
+      <p class="text-[clamp(1.05rem,1.8vw,1.5rem)] leading-[1.25] text-[#1f1f1f]">
+        Demo Brand
+      </p>
+      <p class="m-0 text-[clamp(1.45rem,3vw,2.3rem)] font-semibold leading-[1.05] text-[#0f4467]">
+        {{ 'content.product_card_placeholder' | t }}
+      </p>
+    </div>
+  </article>
+{% else %}
+  {% liquid
+    assign selected_variant = product.selected_or_first_available_variant
+    if selected_variant == blank
+      assign selected_variant = product.variants.first
+    endif
+
+    assign product_images = product.media | where: 'media_type', 'image'
+    assign fallback_image = product_images.first
+
+    assign selected_primary = selected_variant.featured_media
+    if selected_primary == blank or selected_primary.media_type != 'image'
+      assign selected_primary = fallback_image
+    endif
+
+    assign selected_secondary = blank
+    if product_images.size > 1 and selected_primary != blank
+      for media in product_images
+        if media.position > selected_primary.position
+          assign selected_secondary = media
+          break
+        endif
+      endfor
+    endif
+    if selected_secondary == blank and product_images.size > 1
+      for media in product_images
+        if selected_primary != blank and media.id == selected_primary.id
+          continue
+        endif
+        assign selected_secondary = media
+        break
+      endfor
+    endif
+
+    assign secondary_fallback = selected_secondary
+    if secondary_fallback == blank
+      assign secondary_fallback = selected_primary
+    endif
+    if secondary_fallback == blank
+      assign secondary_fallback = fallback_image
+    endif
+
+    assign selected_on_sale = false
+    if selected_variant.compare_at_price > selected_variant.price
+      assign selected_on_sale = true
+    endif
+
+    assign color_option = blank
+    assign color_option_index = -1
+
+    for option in product.options_with_values
+      assign option_name = option.name | downcase
+      if option_name contains 'color' or option_name contains 'colour' or option_name contains 'колір' or option_name contains 'цвет'
+        assign color_option = option
+        assign color_option_index = forloop.index0
+        break
+      endif
+    endfor
+
+    if color_option == blank
+      for option in product.options_with_values
+        assign swatch_count = option.values | map: 'swatch' | compact | size
+        if swatch_count > 0
+          assign color_option = option
+          assign color_option_index = forloop.index0
+          break
+        endif
+      endfor
+    endif
+
+    assign selected_color_value = ''
+    case color_option_index
+      when 0
+        assign selected_color_value = selected_variant.option1
+      when 1
+        assign selected_color_value = selected_variant.option2
+      when 2
+        assign selected_color_value = selected_variant.option3
+    endcase
+  %}
+
+  <article
+    id="{{ card_id }}"
+    class="assessment-product-card"
+    data-assessment-product-card
+    data-product-id="{{ product.id }}"
+    data-selected-variant-id="{{ selected_variant.id }}"
+    data-on-sale="{% if selected_on_sale %}true{% else %}false{% endif %}"
+  >
+    <div class="assessment-image-panel">
+      <p class="assessment-sale-badge" data-sale-badge>On Sale!</p>
+
+      <a
+        href="{{ selected_variant.url }}"
+        class="assessment-media-frame focus-visible:outline-none"
+        data-product-link
+        aria-label="{{ product.title | escape }}"
+      >
+        {% if selected_primary != blank %}
+          <img
+            class="assessment-primary-image{% if selected_secondary != blank %} has-secondary{% endif %}"
+            data-primary-image
+            src="{{ selected_primary | image_url: width: 900 }}"
+            alt="{{ selected_primary.alt | default: product.title | escape }}"
+            width="{{ selected_primary.width }}"
+            height="{{ selected_primary.height }}"
+            loading="lazy"
+          >
+        {% else %}
+          {{ 'product-apparel-1' | placeholder_svg_tag: 'assessment-primary-image' }}
+        {% endif %}
+
+        {% if secondary_fallback != blank %}
+          <img
+            class="assessment-secondary-image{% if selected_secondary == blank %} hidden{% endif %}"
+            data-secondary-image
+            src="{{ secondary_fallback | image_url: width: 900 }}"
+            alt="{{ selected_secondary.alt | default: product.title | escape }}"
+            width="{{ secondary_fallback.width }}"
+            height="{{ secondary_fallback.height }}"
+            loading="lazy"
+          >
+        {% endif %}
+      </a>
+    </div>
+
+    {% if color_option != blank %}
+      <div class="mt-5 flex flex-wrap items-center gap-3" role="list" aria-label="{{ color_option.name | escape }}">
+        {% assign swatch_option_key = 'option' | append: color_option.position %}
+        {% for option_value in color_option.values %}
+          {% liquid
+            assign swatch_variant = blank
+            for variant in product.variants
+              if variant[swatch_option_key] == option_value.name
+                if swatch_variant == blank
+                  assign swatch_variant = variant
+                endif
+                if variant.id == selected_variant.id
+                  assign swatch_variant = variant
+                  break
+                endif
+              endif
+            endfor
+
+            if swatch_variant == blank
+              assign swatch_variant = selected_variant
+            endif
+
+            assign swatch_background = '#9ca3af'
+            if option_value.swatch and option_value.swatch.color
+              assign swatch_background = 'rgb(' | append: option_value.swatch.color.rgb | append: ')'
+            elsif option_value.swatch and option_value.swatch.image
+              assign swatch_image_url = option_value.swatch.image | image_url: width: 64
+              assign swatch_background = 'url(' | append: swatch_image_url | append: ')'
+            else
+              assign color_key = option_value.name | downcase | strip
+
+              if color_key contains 'white'
+                assign swatch_background = '#ffffff'
+              elsif color_key contains 'black'
+                assign swatch_background = '#111111'
+              elsif color_key contains 'orange'
+                assign swatch_background = '#ff6b35'
+              elsif color_key contains 'green'
+                assign swatch_background = '#0a7d11'
+              elsif color_key contains 'blue'
+                assign swatch_background = '#0d6da6'
+              elsif color_key contains 'yellow'
+                assign swatch_background = '#e9d36d'
+              elsif color_key contains 'pink'
+                assign swatch_background = '#e8b4ea'
+              elsif color_key contains 'navy'
+                assign swatch_background = '#1a2b65'
+              elsif color_key contains 'purple'
+                assign swatch_background = '#8049c9'
+              elsif color_key contains 'red'
+                assign swatch_background = '#ce2029'
+              elsif color_key contains 'gray' or color_key contains 'grey'
+                assign swatch_background = '#818b98'
+              endif
+            endif
+
+            assign is_active = false
+            if option_value.name == selected_color_value
+              assign is_active = true
+            endif
+          %}
+
+          <button
+            type="button"
+            class="assessment-swatch"
+            role="listitem"
+            aria-label="{{ option_value.name | escape }}"
+            aria-pressed="{% if is_active %}true{% else %}false{% endif %}"
+            data-swatch-button
+            data-variant-id="{{ swatch_variant.id }}"
+            data-active="{% if is_active %}true{% else %}false{% endif %}"
+          >
+            <span
+              class="assessment-swatch-core"
+              style="--assessment-swatch-bg: {{ swatch_background }};"
+            ></span>
+          </button>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="mt-5 space-y-2">
+      <p class="text-[clamp(1.05rem,1.8vw,1.5rem)] leading-[1.25] text-[#1f1f1f]">
+        {{ product.vendor }}
+      </p>
+      <h3 class="m-0">
+        <a
+          href="{{ selected_variant.url }}"
+          class="text-[clamp(1.45rem,3vw,2.3rem)] font-semibold leading-[1.05] text-[#0f4467] no-underline hover:underline focus-visible:underline"
+          data-product-link
+        >
+          {{ product.title }}
+        </a>
+      </h3>
+
+      <p class="mt-2 flex flex-wrap items-end gap-x-4 gap-y-2">
+        <span class="assessment-compare-price" data-compare-price>
+          {% if selected_on_sale %}{{ selected_variant.compare_at_price | money }}{% endif %}
+        </span>
+        <span class="assessment-current-price" data-current-price>{{ selected_variant.price | money }}</span>
+      </p>
+    </div>
+
+    <script type="application/json" data-variant-json>
+      {
+        {% for variant in product.variants %}
+          {% liquid
+            assign variant_primary = variant.featured_media
+            if variant_primary == blank or variant_primary.media_type != 'image'
+              assign variant_primary = fallback_image
+            endif
+
+            assign variant_secondary = blank
+            if product_images.size > 1 and variant_primary != blank
+              for media in product_images
+                if media.position > variant_primary.position
+                  assign variant_secondary = media
+                  break
+                endif
+              endfor
+            endif
+            if variant_secondary == blank and product_images.size > 1
+              for media in product_images
+                if variant_primary != blank and media.id == variant_primary.id
+                  continue
+                endif
+                assign variant_secondary = media
+                break
+              endfor
+            endif
+
+            assign variant_is_on_sale = false
+            if variant.compare_at_price > variant.price
+              assign variant_is_on_sale = true
+            endif
+
+            assign variant_color_value = ''
+            case color_option_index
+              when 0
+                assign variant_color_value = variant.option1
+              when 1
+                assign variant_color_value = variant.option2
+              when 2
+                assign variant_color_value = variant.option3
+            endcase
+          %}
+          "{{ variant.id }}": {
+            "id": {{ variant.id | json }},
+            "url": {{ variant.url | json }},
+            "price": {{ variant.price | money | json }},
+            "compareAtPrice": {% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money | json }}{% else %}""{% endif %},
+            "onSale": {{ variant_is_on_sale | json }},
+            "primaryImage": {{ variant_primary | image_url: width: 900 | json }},
+            "primaryAlt": {{ variant_primary.alt | default: product.title | json }},
+            "secondaryImage": {% if variant_secondary %}{{ variant_secondary | image_url: width: 900 | json }}{% else %}null{% endif %},
+            "secondaryAlt": {{ variant_secondary.alt | default: product.title | json }},
+            "colorValue": {{ variant_color_value | json }}
+          }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      }
+    </script>
+  </article>
+{% endif %}
