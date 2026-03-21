@@ -35,8 +35,17 @@ function setVariant(card, variantId) {
 
   card.dataset.selectedVariantId = String(variant.id);
   card.dataset.onSale = variant.onSale ? 'true' : 'false';
+  const saleBadgeMode = (card.dataset.saleBadgeMode || 'default').toLowerCase();
   const manualSaleBadgeEnabled = card.dataset.manualSaleBadge === 'true';
-  card.dataset.saleBadgeVisible = variant.onSale || manualSaleBadgeEnabled ? 'true' : 'false';
+  let saleBadgeVisible = variant.onSale || manualSaleBadgeEnabled;
+
+  if (saleBadgeMode === 'force_show') {
+    saleBadgeVisible = true;
+  } else if (saleBadgeMode === 'force_hide') {
+    saleBadgeVisible = false;
+  }
+
+  card.dataset.saleBadgeVisible = saleBadgeVisible ? 'true' : 'false';
 
   const productLinks = card.querySelectorAll(LINK_SELECTOR);
   for (const link of productLinks) {

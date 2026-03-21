@@ -86,8 +86,20 @@
       assign manual_sale_badge = product.metafields.custom.sale_badge_enabled.value
     endif
 
+    assign sale_badge_mode = 'default'
+    if product.metafields.custom.sale_badge_mode != blank
+      assign sale_badge_mode = product.metafields.custom.sale_badge_mode.value | downcase | strip
+    endif
+    unless sale_badge_mode == 'force_show' or sale_badge_mode == 'force_hide'
+      assign sale_badge_mode = 'default'
+    endunless
+
     assign sale_badge_visible = selected_on_sale
-    if manual_sale_badge
+    if sale_badge_mode == 'force_show'
+      assign sale_badge_visible = true
+    elsif sale_badge_mode == 'force_hide'
+      assign sale_badge_visible = false
+    elsif manual_sale_badge
       assign sale_badge_visible = true
     endif
 
@@ -155,6 +167,7 @@
     data-selected-variant-id="{{ selected_variant.id }}"
     data-on-sale="{% if selected_on_sale %}true{% else %}false{% endif %}"
     data-manual-sale-badge="{% if manual_sale_badge %}true{% else %}false{% endif %}"
+    data-sale-badge-mode="{{ sale_badge_mode }}"
     data-sale-badge-visible="{% if sale_badge_visible %}true{% else %}false{% endif %}"
   >
     <div class="assessment-image-panel relative box-border h-[340px] w-full overflow-hidden rounded-[10px] border bg-white">
