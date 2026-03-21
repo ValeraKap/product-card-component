@@ -17,6 +17,46 @@
     line-height: 18px;
     letter-spacing: 0.01em;
     white-space: nowrap;
+    transition: transform 220ms ease, box-shadow 220ms ease;
+    will-change: transform;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .assessment-sale-badge:hover,
+    .assessment-sale-badge:focus-visible {
+      animation: saleBadgeFloat 1.8s ease-in-out infinite;
+      box-shadow: 0 8px 18px rgba(255, 0, 0, 0.15);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .assessment-sale-badge:hover,
+    .assessment-sale-badge:focus-visible {
+      animation: none;
+      transform: none;
+    }
+  }
+
+  @keyframes saleBadgeFloat {
+    0% {
+      transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+
+    25% {
+      transform: translate3d(1px, -2px, 0) rotate(-0.8deg);
+    }
+
+    50% {
+      transform: translate3d(0, -3px, 0) rotate(0.8deg);
+    }
+
+    75% {
+      transform: translate3d(-1px, -1px, 0) rotate(-0.4deg);
+    }
+
+    100% {
+      transform: translate3d(0, 0, 0) rotate(0deg);
+    }
   }
 
   .assessment-swatch {

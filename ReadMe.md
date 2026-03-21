@@ -12,6 +12,8 @@ Custom Shopify product card built from scratch in Dawn with TailwindCSS.
 - Variant swatches support desktop hover preview and click-to-commit behavior:
   - hover on desktop previews variant image/price/url
   - click fixes the selected variant state
+- Sale badge/label includes a subtle Tailwind-based hover animation for desktop interactions.
+- Badge/label click-through behavior (for example, linking to a collection, filtered listing, or tag group page) is feasible as a next iteration, but was intentionally left out because it was not required in the assessment scope.
 - Product text supports display fallbacks for heading/title (including product type and optional metafields).
 - `Plain T-shirt` is currently sourced from `Product type`; if needed, this can be overridden via metafields.
 
