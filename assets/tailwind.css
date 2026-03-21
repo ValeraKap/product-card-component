@@ -557,6 +557,38 @@
   padding: 20px;
 }
 
+.p-\[16px\] {
+  padding: 16px;
+}
+
+.p-\[10px\] {
+  padding: 10px;
+}
+
+.p-\[1px\] {
+  padding: 1px;
+}
+
+.p-\[14px\] {
+  padding: 14px;
+}
+
+.p-\[12px\] {
+  padding: 12px;
+}
+
+.p-\[8px\] {
+  padding: 8px;
+}
+
+.p-\[2px\] {
+  padding: 2px;
+}
+
+.p-\[0px\] {
+  padding: 0px;
+}
+
 .px-\[13\.8049px\] {
   padding-left: 13.8049px;
   padding-right: 13.8049px;
@@ -565,6 +597,11 @@
 .py-\[6\.4024px\] {
   padding-top: 6.4024px;
   padding-bottom: 6.4024px;
+}
+
+.px-\[8px\] {
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 .text-left {

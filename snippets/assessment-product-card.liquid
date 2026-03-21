@@ -22,7 +22,7 @@
   >
     <div class="assessment-image-panel relative box-border h-[340px] w-full overflow-hidden rounded-[10px] border bg-white">
       <div class="assessment-media-frame relative block h-full w-full">
-        {{ 'product-apparel-1' | placeholder_svg_tag: 'absolute inset-0 h-full w-full object-contain p-[20px]' }}
+        {{ 'product-apparel-1' | placeholder_svg_tag: 'absolute inset-0 h-full w-full object-contain p-[8px]' }}
       </div>
     </div>
     <div class="flex w-[246px] flex-col items-start gap-2">
@@ -173,7 +173,7 @@
       >
         {% if selected_primary != blank %}
           <img
-            class="absolute inset-0 h-full w-full object-contain p-[20px]{% if selected_secondary != blank %} has-secondary{% endif %}"
+            class="absolute inset-0 h-full w-full object-contain p-[8px]{% if selected_secondary != blank %} has-secondary{% endif %}"
             data-primary-image
             src="{{ selected_primary | image_url: width: 900 }}"
             alt="{{ selected_primary.alt | default: product.title | escape }}"
@@ -182,12 +182,12 @@
             loading="lazy"
           >
         {% else %}
-          {{ 'product-apparel-1' | placeholder_svg_tag: 'absolute inset-0 h-full w-full object-contain p-[20px]' }}
+          {{ 'product-apparel-1' | placeholder_svg_tag: 'absolute inset-0 h-full w-full object-contain p-[8px]' }}
         {% endif %}
 
         {% if secondary_fallback != blank %}
           <img
-            class="absolute inset-0 h-full w-full object-contain p-[20px]{% if selected_secondary == blank %} hidden{% endif %}"
+            class="absolute inset-0 h-full w-full object-contain p-[0px]{% if selected_secondary == blank %} hidden{% endif %}"
             data-secondary-image
             src="{{ secondary_fallback | image_url: width: 900 }}"
             alt="{{ selected_secondary.alt | default: product.title | escape }}"
