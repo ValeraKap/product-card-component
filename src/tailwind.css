@@ -4,18 +4,29 @@
 
 @layer components {
   .assessment-product-card {
+    --apc-primary: #0a4874;
+    --apc-text: #111111;
+    --apc-danger: #ff0000;
+    --apc-border: #e8e8e8;
+    --apc-surface: #ffffff;
+    --apc-tooltip-bg: rgba(17, 17, 17, 0.94);
+    --apc-primary-22: rgba(10, 72, 116, 0.22);
+    --apc-primary-18: rgba(10, 72, 116, 0.18);
+    --apc-surface-96: rgba(255, 255, 255, 0.96);
+
     font-family: Roboto, sans-serif;
+    color: var(--apc-text);
   }
 
   .assessment-image-panel {
-    border: 1px solid #e8e8e8;
-    background: #ffffff;
+    border: 1px solid var(--apc-border);
+    background: var(--apc-surface);
   }
 
   .assessment-sale-badge {
-    border: 1px solid #ff0000;
-    background: #ffffff;
-    color: #ff0000;
+    border: 1px solid var(--apc-danger);
+    background: var(--apc-surface);
+    color: var(--apc-danger);
     cursor: pointer;
     font-family: 'Franklin Gothic ATF', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 16.5px;
@@ -35,8 +46,8 @@
     max-width: 220px;
     padding: 6px 10px;
     border-radius: 8px;
-    background: rgba(17, 17, 17, 0.94);
-    color: #ffffff;
+    background: var(--apc-tooltip-bg);
+    color: var(--apc-surface);
     font-family: Roboto, sans-serif;
     font-size: 12px;
     line-height: 14px;
@@ -135,10 +146,10 @@
     min-width: 40px;
     max-width: 98px;
     padding: 3px 8px;
-    border: 1px solid rgba(10, 72, 116, 0.22);
+    border: 1px solid var(--apc-primary-22);
     border-radius: 9999px;
-    background: rgba(255, 255, 255, 0.96);
-    color: #0a4874;
+    background: var(--apc-surface-96);
+    color: var(--apc-primary);
     font-family: Roboto, sans-serif;
     font-size: 11px;
     font-weight: 500;
@@ -163,7 +174,7 @@
 
     .assessment-swatch:not([data-active='true']):hover .assessment-swatch-core,
     .assessment-swatch:not([data-active='true']):focus-visible .assessment-swatch-core {
-      box-shadow: 0 0 0 2px rgba(10, 72, 116, 0.18);
+      box-shadow: 0 0 0 2px var(--apc-primary-18);
     }
 
     .assessment-swatch:hover .assessment-swatch-tooltip,
@@ -192,7 +203,7 @@
     content: '';
     position: absolute;
     inset: -2px;
-    border: 1px solid #0a4874;
+    border: 1px solid var(--apc-primary);
     border-radius: 9999px;
     pointer-events: none;
   }
@@ -227,6 +238,7 @@
     font-size: 16px;
     line-height: 18px;
     font-weight: 500;
+    color: var(--apc-primary);
   }
 
   .assessment-vendor-line {
@@ -262,6 +274,7 @@
     font-size: 14px;
     line-height: 16px;
     font-weight: 400;
+    color: var(--apc-text);
   }
 
   [data-assessment-product-card][data-sale-badge-visible='false'] [data-sale-badge] {
@@ -277,7 +290,7 @@
   }
 
   [data-assessment-product-card][data-on-sale='true'] [data-current-price] {
-    color: #ff0000;
+    color: var(--apc-danger);
   }
 
   [data-assessment-product-card] [data-primary-image],
