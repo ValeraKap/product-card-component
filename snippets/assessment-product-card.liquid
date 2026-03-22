@@ -80,6 +80,7 @@
     if image_alt_fallback == blank
       assign image_alt_fallback = 'content.product_image' | t
     endif
+    assign card_image_sizes = '(max-width: 767px) 50vw, (max-width: 1023px) 33vw, 25vw'
 
     assign selected_on_sale = false
     if selected_variant.compare_at_price > selected_variant.price
@@ -191,28 +192,48 @@
         aria-label="{{ product.title | escape }}"
       >
         {% if selected_primary != blank %}
+          {% capture selected_primary_srcset -%}
+            {{ selected_primary | image_url: width: 240 }} 240w,
+            {{ selected_primary | image_url: width: 320 }} 320w,
+            {{ selected_primary | image_url: width: 480 }} 480w,
+            {{ selected_primary | image_url: width: 640 }} 640w,
+            {{ selected_primary | image_url: width: 900 }} 900w
+          {%- endcapture %}
           <img
             class="absolute inset-0 z-0 h-full w-full object-contain p-[8px]{% if selected_secondary != blank %} has-secondary{% endif %}"
             data-primary-image
             src="{{ selected_primary | image_url: width: 900 }}"
+            srcset="{{ selected_primary_srcset | strip }}"
+            sizes="{{ card_image_sizes }}"
             alt="{{ selected_primary.alt | default: image_alt_fallback | escape }}"
             width="{{ selected_primary.width }}"
             height="{{ selected_primary.height }}"
             loading="lazy"
+            decoding="async"
           >
         {% else %}
           {{ 'product-apparel-1' | placeholder_svg_tag: 'absolute inset-0 h-full w-full object-contain p-[8px]' }}
         {% endif %}
 
         {% if secondary_fallback != blank %}
+          {% capture secondary_fallback_srcset -%}
+            {{ secondary_fallback | image_url: width: 240 }} 240w,
+            {{ secondary_fallback | image_url: width: 320 }} 320w,
+            {{ secondary_fallback | image_url: width: 480 }} 480w,
+            {{ secondary_fallback | image_url: width: 640 }} 640w,
+            {{ secondary_fallback | image_url: width: 900 }} 900w
+          {%- endcapture %}
           <img
             class="absolute inset-0 z-0 h-full w-full object-contain p-[0px]{% if selected_secondary == blank %} hidden{% endif %}"
             data-secondary-image
             src="{{ secondary_fallback | image_url: width: 900 }}"
+            srcset="{{ secondary_fallback_srcset | strip }}"
+            sizes="{{ card_image_sizes }}"
             alt="{{ selected_secondary.alt | default: image_alt_fallback | escape }}"
             width="{{ secondary_fallback.width }}"
             height="{{ secondary_fallback.height }}"
             loading="lazy"
+            decoding="async"
           >
         {% endif %}
       </a>
@@ -381,6 +402,24 @@
                 assign variant_color_value = variant.option3
             endcase
           %}
+          {% capture variant_primary_srcset -%}
+            {{ variant_primary | image_url: width: 240 }} 240w,
+            {{ variant_primary | image_url: width: 320 }} 320w,
+            {{ variant_primary | image_url: width: 480 }} 480w,
+            {{ variant_primary | image_url: width: 640 }} 640w,
+            {{ variant_primary | image_url: width: 900 }} 900w
+          {%- endcapture %}
+          {% if variant_secondary %}
+            {% capture variant_secondary_srcset -%}
+              {{ variant_secondary | image_url: width: 240 }} 240w,
+              {{ variant_secondary | image_url: width: 320 }} 320w,
+              {{ variant_secondary | image_url: width: 480 }} 480w,
+              {{ variant_secondary | image_url: width: 640 }} 640w,
+              {{ variant_secondary | image_url: width: 900 }} 900w
+            {%- endcapture %}
+          {% else %}
+            {% assign variant_secondary_srcset = '' %}
+          {% endif %}
           "{{ variant.id }}": {
             "id": {{ variant.id | json }},
             "url": {{ variant.url | json }},
@@ -388,8 +427,10 @@
             "compareAtPrice": {% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money | json }}{% else %}""{% endif %},
             "onSale": {{ variant_is_on_sale | json }},
             "primaryImage": {{ variant_primary | image_url: width: 900 | json }},
+            "primarySrcset": {{ variant_primary_srcset | strip | json }},
             "primaryAlt": {{ variant_primary.alt | default: image_alt_fallback | json }},
             "secondaryImage": {% if variant_secondary %}{{ variant_secondary | image_url: width: 900 | json }}{% else %}null{% endif %},
+            "secondarySrcset": {{ variant_secondary_srcset | strip | json }},
             "secondaryAlt": {{ variant_secondary.alt | default: image_alt_fallback | json }},
             "colorValue": {{ variant_color_value | json }}
           }{% unless forloop.last %},{% endunless %}

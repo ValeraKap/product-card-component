@@ -68,12 +68,22 @@ function setVariant(card, variantId, options = {}) {
     if (variant.primaryImage) {
       primaryImage.src = variant.primaryImage;
     }
+    if (variant.primarySrcset) {
+      primaryImage.srcset = variant.primarySrcset;
+    } else {
+      primaryImage.removeAttribute('srcset');
+    }
     primaryImage.alt = variant.primaryAlt || fallbackAlt;
   }
 
   if (secondaryImage instanceof HTMLImageElement) {
     if (variant.secondaryImage) {
       secondaryImage.src = variant.secondaryImage;
+      if (variant.secondarySrcset) {
+        secondaryImage.srcset = variant.secondarySrcset;
+      } else {
+        secondaryImage.removeAttribute('srcset');
+      }
       secondaryImage.alt = variant.secondaryAlt || fallbackAlt;
       secondaryImage.classList.remove('hidden');
       primaryImage?.classList.add('has-secondary');

@@ -16,6 +16,8 @@ Custom Shopify product card built from scratch in Dawn with TailwindCSS.
 - Badge/label click-through behavior (for example, linking to a collection, filtered listing, or tag group page) is feasible as a next iteration, but was intentionally left out because it was not required in the assessment scope.
 - Internationalization-ready: static UI labels use locale translation keys (`| t`), and configurable metafield text can be localized via Shopify localization tools.
 - SEO/accessibility image handling: product images always receive a non-empty `alt` with fallbacks (`media alt -> product title -> localized "Product image"`), including after swatch-based variant switching.
+- Responsive behavior: product list/grid is configured to display 2 cards on small screens and 3 cards on tablet widths, with desktop layout preserved.
+- Performance-oriented image delivery: product images use lazy loading, intrinsic dimensions (`width`/`height`), `decoding="async"`, and responsive `srcset/sizes` (also updated on variant switch) to reduce payload and improve PageSpeed.
 - Product text supports display fallbacks for heading/title (including product type and optional metafields).
 - `Plain T-shirt` is currently sourced from `Product type`; if needed, this can be overridden via metafields.
 
