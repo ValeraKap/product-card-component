@@ -2,6 +2,96 @@ const CARD_SELECTOR = '[data-assessment-product-card]';
 const SWATCH_SELECTOR = '[data-swatch-button]';
 const SWATCH_LIST_SELECTOR = '[data-swatch-list]';
 const LINK_SELECTOR = '[data-product-link]';
+const SALE_BADGE_TRIGGER_SELECTOR = '[data-sale-badge-trigger]';
+const SALE_BADGE_TOOLTIP_SELECTOR = '[data-sale-badge-tooltip]';
+const SALE_TOOLTIP_TIMEOUT_MS = 2200;
+const saleBadgeTooltipTimers = new WeakMap();
+
+/**
+ * @param {HTMLElement} card
+ */
+function positionSaleBadgeTooltip(card) {
+  const saleBadgeTrigger = card.querySelector(SALE_BADGE_TRIGGER_SELECTOR);
+  const saleBadgeTooltip = card.querySelector(SALE_BADGE_TOOLTIP_SELECTOR);
+  if (!(saleBadgeTrigger instanceof HTMLElement) || !(saleBadgeTooltip instanceof HTMLElement)) return;
+
+  const triggerRect = saleBadgeTrigger.getBoundingClientRect();
+  const tooltipHeight = saleBadgeTooltip.offsetHeight || 28;
+  const horizontalCenter = triggerRect.left + triggerRect.width / 2;
+  const preferredTop = triggerRect.top - tooltipHeight - 12;
+  const shouldPlaceBottom = preferredTop < 8;
+
+  saleBadgeTooltip.style.left = `${horizontalCenter}px`;
+  saleBadgeTooltip.style.top = shouldPlaceBottom ? `${triggerRect.bottom}px` : `${triggerRect.top}px`;
+  saleBadgeTooltip.dataset.placement = shouldPlaceBottom ? 'bottom' : 'top';
+}
+
+/**
+ * @param {HTMLElement} card
+ */
+function isSaleBadgeTooltipVisible(card) {
+  const saleBadgeTooltip = card.querySelector(SALE_BADGE_TOOLTIP_SELECTOR);
+  return saleBadgeTooltip instanceof HTMLElement && saleBadgeTooltip.classList.contains('is-visible');
+}
+
+/**
+ * Hide all sale badge tooltips.
+ */
+function hideAllSaleBadgeTooltips() {
+  const cards = document.querySelectorAll(CARD_SELECTOR);
+  for (const card of cards) {
+    if (card instanceof HTMLElement) {
+      hideSaleBadgeTooltip(card);
+    }
+  }
+}
+
+/**
+ * @param {HTMLElement} card
+ */
+function hideSaleBadgeTooltip(card) {
+  const saleBadgeTrigger = card.querySelector(SALE_BADGE_TRIGGER_SELECTOR);
+  const saleBadgeTooltip = card.querySelector(SALE_BADGE_TOOLTIP_SELECTOR);
+
+  if (saleBadgeTrigger instanceof HTMLElement) {
+    saleBadgeTrigger.setAttribute('aria-expanded', 'false');
+  }
+
+  if (saleBadgeTooltip instanceof HTMLElement) {
+    saleBadgeTooltip.classList.remove('is-visible');
+    saleBadgeTooltip.setAttribute('aria-hidden', 'true');
+    saleBadgeTooltip.removeAttribute('data-placement');
+  }
+
+  const activeTimer = saleBadgeTooltipTimers.get(card);
+  if (activeTimer) {
+    window.clearTimeout(activeTimer);
+    saleBadgeTooltipTimers.delete(card);
+  }
+}
+
+/**
+ * @param {HTMLElement} card
+ */
+function showSaleBadgeTooltip(card) {
+  const saleBadgeTrigger = card.querySelector(SALE_BADGE_TRIGGER_SELECTOR);
+  const saleBadgeTooltip = card.querySelector(SALE_BADGE_TOOLTIP_SELECTOR);
+
+  if (!(saleBadgeTrigger instanceof HTMLElement) || !(saleBadgeTooltip instanceof HTMLElement)) return;
+  if (card.dataset.saleBadgeVisible === 'false') return;
+
+  hideSaleBadgeTooltip(card);
+  positionSaleBadgeTooltip(card);
+  saleBadgeTrigger.setAttribute('aria-expanded', 'true');
+  saleBadgeTooltip.classList.add('is-visible');
+  saleBadgeTooltip.setAttribute('aria-hidden', 'false');
+
+  const timerId = window.setTimeout(() => {
+    hideSaleBadgeTooltip(card);
+  }, SALE_TOOLTIP_TIMEOUT_MS);
+
+  saleBadgeTooltipTimers.set(card, timerId);
+}
 
 /**
  * @param {HTMLElement} card
@@ -53,6 +143,9 @@ function setVariant(card, variantId, options = {}) {
   }
 
   card.dataset.saleBadgeVisible = saleBadgeVisible ? 'true' : 'false';
+  if (!saleBadgeVisible) {
+    hideSaleBadgeTooltip(card);
+  }
 
   const productLinks = card.querySelectorAll(LINK_SELECTOR);
   for (const link of productLinks) {
@@ -147,16 +240,53 @@ document.addEventListener('click', (event) => {
   const target = event.target instanceof Element ? event.target : null;
   const swatchButton = target?.closest(SWATCH_SELECTOR);
 
-  if (!(swatchButton instanceof HTMLElement)) return;
+  if (swatchButton instanceof HTMLElement) {
+    const card = swatchButton.closest(CARD_SELECTOR);
+    if (!(card instanceof HTMLElement)) return;
 
-  const card = swatchButton.closest(CARD_SELECTOR);
-  if (!(card instanceof HTMLElement)) return;
+    const { variantId } = swatchButton.dataset;
+    if (!variantId) return;
 
-  const { variantId } = swatchButton.dataset;
-  if (!variantId) return;
+    setVariant(card, variantId);
+    return;
+  }
 
-  setVariant(card, variantId);
+  const saleBadgeTrigger = target?.closest(SALE_BADGE_TRIGGER_SELECTOR);
+  if (saleBadgeTrigger instanceof HTMLElement) {
+    const card = saleBadgeTrigger.closest(CARD_SELECTOR);
+    if (!(card instanceof HTMLElement)) return;
+
+    if (isSaleBadgeTooltipVisible(card)) {
+      hideSaleBadgeTooltip(card);
+    } else {
+      showSaleBadgeTooltip(card);
+    }
+    return;
+  }
+
+  hideAllSaleBadgeTooltips();
 });
+
+document.addEventListener('keydown', (event) => {
+  if (event.key !== 'Escape') return;
+  hideAllSaleBadgeTooltips();
+});
+
+window.addEventListener('resize', () => {
+  const cards = document.querySelectorAll(CARD_SELECTOR);
+  for (const card of cards) {
+    if (!(card instanceof HTMLElement) || !isSaleBadgeTooltipVisible(card)) continue;
+    positionSaleBadgeTooltip(card);
+  }
+});
+
+window.addEventListener(
+  'scroll',
+  () => {
+    hideAllSaleBadgeTooltips();
+  },
+  { passive: true }
+);
 
 document.addEventListener('mouseover', (event) => {
   if (!canUseHoverPreview()) return;

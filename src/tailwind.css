@@ -16,6 +16,7 @@
     border: 1px solid #ff0000;
     background: #ffffff;
     color: #ff0000;
+    cursor: pointer;
     font-family: 'Franklin Gothic ATF', 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 16.5px;
     line-height: 18px;
@@ -23,6 +24,48 @@
     white-space: nowrap;
     transition: transform 220ms ease, box-shadow 220ms ease;
     will-change: transform;
+  }
+
+  .assessment-sale-badge-tooltip {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 999;
+    width: max-content;
+    max-width: 220px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: rgba(17, 17, 17, 0.94);
+    color: #ffffff;
+    font-family: Roboto, sans-serif;
+    font-size: 12px;
+    line-height: 14px;
+    text-align: center;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    box-shadow: 0 6px 18px rgba(17, 17, 17, 0.2);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translate(-50%, calc(-100% + 4px));
+    transition:
+      opacity 160ms ease,
+      transform 160ms ease,
+      visibility 0s linear 160ms;
+  }
+
+  .assessment-sale-badge-tooltip.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0ms, 0ms, 0ms;
+  }
+
+  .assessment-sale-badge-tooltip.is-visible[data-placement='top'] {
+    transform: translate(-50%, calc(-100% - 8px));
+  }
+
+  .assessment-sale-badge-tooltip.is-visible[data-placement='bottom'] {
+    transform: translate(-50%, 8px);
   }
 
   @media (hover: hover) and (pointer: fine) {
@@ -210,6 +253,10 @@
   }
 
   [data-assessment-product-card][data-sale-badge-visible='false'] [data-sale-badge] {
+    display: none;
+  }
+
+  [data-assessment-product-card][data-sale-badge-visible='false'] [data-sale-badge-wrap] {
     display: none;
   }
 

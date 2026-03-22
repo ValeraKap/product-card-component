@@ -17,6 +17,9 @@ Custom Shopify product card built from scratch in Dawn with TailwindCSS.
   - color tooltip appears on swatch hover/focus for faster variant recognition
   - transitions are tuned to feel responsive and lightweight without visual noise
 - Sale badge/label includes a subtle Tailwind-based hover animation for desktop interactions.
+- Sale badge includes a lightweight interaction hint:
+  - cursor changes to pointer on hover
+  - click shows a compact tooltip indicating that the badge can be connected to a promo/category URL in a future iteration
 - Badge/label click-through behavior (for example, linking to a collection, filtered listing, or tag group page) is feasible as a next iteration, but was intentionally left out because it was not required in the assessment scope.
 - Internationalization-ready: static UI labels use locale translation keys (`| t`), and configurable metafield text can be localized via Shopify localization tools.
 - SEO/accessibility image handling: product images always receive a non-empty `alt` with fallbacks (`media alt -> product title -> localized "Product image"`), including after swatch-based variant switching.
