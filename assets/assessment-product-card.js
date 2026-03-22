@@ -35,6 +35,7 @@ function setVariant(card, variantId, options = {}) {
 
   const variant = variantMap[String(variantId)];
   if (!variant) return;
+  const fallbackAlt = card.dataset.productTitle || 'Product image';
 
   if (commit) {
     card.dataset.selectedVariantId = String(variant.id);
@@ -67,19 +68,19 @@ function setVariant(card, variantId, options = {}) {
     if (variant.primaryImage) {
       primaryImage.src = variant.primaryImage;
     }
-    primaryImage.alt = variant.primaryAlt || '';
+    primaryImage.alt = variant.primaryAlt || fallbackAlt;
   }
 
   if (secondaryImage instanceof HTMLImageElement) {
     if (variant.secondaryImage) {
       secondaryImage.src = variant.secondaryImage;
-      secondaryImage.alt = variant.secondaryAlt || '';
+      secondaryImage.alt = variant.secondaryAlt || fallbackAlt;
       secondaryImage.classList.remove('hidden');
       primaryImage?.classList.add('has-secondary');
     } else {
       secondaryImage.removeAttribute('src');
       secondaryImage.removeAttribute('srcset');
-      secondaryImage.alt = '';
+      secondaryImage.alt = fallbackAlt;
       secondaryImage.classList.add('hidden');
       primaryImage?.classList.remove('has-secondary');
     }

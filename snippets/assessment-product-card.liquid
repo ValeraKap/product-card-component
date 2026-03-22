@@ -27,7 +27,7 @@
     </div>
     <div class="flex w-full max-w-[246px] min-w-0 flex-col items-start gap-2">
       <p class="text-[14px] font-normal leading-[16px] text-[#111111]">
-        Demo Brand
+        {{ shop.name }}
       </p>
       <p class="m-0 text-[16px] font-medium leading-[18px] text-[#0A4874]">
         {{ 'content.product_card_placeholder' | t }}
@@ -76,6 +76,11 @@
       assign secondary_fallback = fallback_image
     endif
 
+    assign image_alt_fallback = product.title | strip
+    if image_alt_fallback == blank
+      assign image_alt_fallback = 'content.product_image' | t
+    endif
+
     assign selected_on_sale = false
     if selected_variant.compare_at_price > selected_variant.price
       assign selected_on_sale = true
@@ -103,11 +108,11 @@
       assign sale_badge_visible = true
     endif
 
-    assign sale_badge_text = 'Sale!'
+    assign sale_badge_text = 'content.product_badge_sale' | t
     if product.metafields.custom.sale_badge_text != blank
       assign sale_badge_text = product.metafields.custom.sale_badge_text.value | strip
       if sale_badge_text == blank
-        assign sale_badge_text = 'Sale!'
+        assign sale_badge_text = 'content.product_badge_sale' | t
       endif
     endif
 
@@ -164,6 +169,7 @@
     class="assessment-product-card relative isolate z-0 mb-4 flex w-[calc(100%-6px)] min-w-0 max-w-[315px] flex-col items-start gap-[15px] p-0 text-[#111111] md:w-full"
     data-assessment-product-card
     data-product-id="{{ product.id }}"
+    data-product-title="{{ image_alt_fallback | escape }}"
     data-selected-variant-id="{{ selected_variant.id }}"
     data-on-sale="{% if selected_on_sale %}true{% else %}false{% endif %}"
     data-manual-sale-badge="{% if manual_sale_badge %}true{% else %}false{% endif %}"
@@ -189,7 +195,7 @@
             class="absolute inset-0 z-0 h-full w-full object-contain p-[8px]{% if selected_secondary != blank %} has-secondary{% endif %}"
             data-primary-image
             src="{{ selected_primary | image_url: width: 900 }}"
-            alt="{{ selected_primary.alt | default: product.title | escape }}"
+            alt="{{ selected_primary.alt | default: image_alt_fallback | escape }}"
             width="{{ selected_primary.width }}"
             height="{{ selected_primary.height }}"
             loading="lazy"
@@ -203,7 +209,7 @@
             class="absolute inset-0 z-0 h-full w-full object-contain p-[0px]{% if selected_secondary == blank %} hidden{% endif %}"
             data-secondary-image
             src="{{ secondary_fallback | image_url: width: 900 }}"
-            alt="{{ selected_secondary.alt | default: product.title | escape }}"
+            alt="{{ selected_secondary.alt | default: image_alt_fallback | escape }}"
             width="{{ secondary_fallback.width }}"
             height="{{ secondary_fallback.height }}"
             loading="lazy"
@@ -382,9 +388,9 @@
             "compareAtPrice": {% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money | json }}{% else %}""{% endif %},
             "onSale": {{ variant_is_on_sale | json }},
             "primaryImage": {{ variant_primary | image_url: width: 900 | json }},
-            "primaryAlt": {{ variant_primary.alt | default: product.title | json }},
+            "primaryAlt": {{ variant_primary.alt | default: image_alt_fallback | json }},
             "secondaryImage": {% if variant_secondary %}{{ variant_secondary | image_url: width: 900 | json }}{% else %}null{% endif %},
-            "secondaryAlt": {{ variant_secondary.alt | default: product.title | json }},
+            "secondaryAlt": {{ variant_secondary.alt | default: image_alt_fallback | json }},
             "colorValue": {{ variant_color_value | json }}
           }{% unless forloop.last %},{% endunless %}
         {% endfor %}
