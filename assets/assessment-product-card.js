@@ -2,9 +2,13 @@ const CARD_SELECTOR = '[data-assessment-product-card]';
 const SWATCH_SELECTOR = '[data-swatch-button]';
 const SWATCH_LIST_SELECTOR = '[data-swatch-list]';
 const LINK_SELECTOR = '[data-product-link]';
+const MEDIA_FRAME_SELECTOR = '.assessment-media-frame[data-product-link]';
 const SALE_BADGE_TRIGGER_SELECTOR = '[data-sale-badge-trigger]';
 const SALE_BADGE_TOOLTIP_SELECTOR = '[data-sale-badge-tooltip]';
 const SALE_TOOLTIP_TIMEOUT_MS = 2200;
+const SWIPE_THRESHOLD_PX = 36;
+const SWIPE_VERTICAL_RATIO = 1.1;
+const SWIPE_SUPPRESS_CLICK_MS = 350;
 const saleBadgeTooltipTimers = new WeakMap();
 
 /**
@@ -236,6 +240,119 @@ function canUseHoverPreview() {
   return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 }
 
+/**
+ * @returns {boolean}
+ */
+function canUseTouchSwipe() {
+  return window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+}
+
+/**
+ * @param {HTMLElement} card
+ * @returns {string[]}
+ */
+function getSwipeVariantIds(card) {
+  const swatchButtons = Array.from(card.querySelectorAll(SWATCH_SELECTOR));
+  const swatchIds = [];
+  const seen = new Set();
+
+  for (const swatchButton of swatchButtons) {
+    const variantId = swatchButton.dataset.variantId;
+    if (!variantId || seen.has(variantId)) continue;
+    seen.add(variantId);
+    swatchIds.push(variantId);
+  }
+
+  if (swatchIds.length > 0) return swatchIds;
+
+  const variantMap = getVariantMap(card);
+  return variantMap ? Object.keys(variantMap) : [];
+}
+
+/**
+ * @param {HTMLElement} card
+ * @param {number} step
+ */
+function swipeToSiblingVariant(card, step) {
+  const variantIds = getSwipeVariantIds(card);
+  if (variantIds.length < 2) return;
+
+  const currentVariantId = card.dataset.committedVariantId || card.dataset.selectedVariantId || variantIds[0];
+  const currentIndex = Math.max(0, variantIds.indexOf(String(currentVariantId)));
+  const nextIndex = (currentIndex + step + variantIds.length) % variantIds.length;
+  const nextVariantId = variantIds[nextIndex];
+  if (!nextVariantId) return;
+
+  setVariant(card, nextVariantId);
+}
+
+/**
+ * @param {HTMLElement} card
+ */
+function bindTouchSwipe(card) {
+  if (!canUseTouchSwipe()) return;
+  if (card.dataset.swipeBound === 'true') return;
+
+  const mediaFrame = card.querySelector(MEDIA_FRAME_SELECTOR);
+  if (!(mediaFrame instanceof HTMLElement)) return;
+
+  card.dataset.swipeBound = 'true';
+
+  const swipeState = {
+    startX: 0,
+    startY: 0,
+    active: false,
+    suppressClickUntil: 0,
+  };
+
+  mediaFrame.addEventListener(
+    'touchstart',
+    (event) => {
+      if (event.touches.length !== 1) {
+        swipeState.active = false;
+        return;
+      }
+      const touch = event.touches[0];
+      swipeState.startX = touch.clientX;
+      swipeState.startY = touch.clientY;
+      swipeState.active = true;
+    },
+    { passive: true }
+  );
+
+  mediaFrame.addEventListener(
+    'touchend',
+    (event) => {
+      if (!swipeState.active || event.changedTouches.length !== 1) return;
+      swipeState.active = false;
+
+      const touch = event.changedTouches[0];
+      const deltaX = touch.clientX - swipeState.startX;
+      const deltaY = touch.clientY - swipeState.startY;
+      const absX = Math.abs(deltaX);
+      const absY = Math.abs(deltaY);
+
+      if (absX < SWIPE_THRESHOLD_PX) return;
+      if (absX <= absY * SWIPE_VERTICAL_RATIO) return;
+
+      swipeToSiblingVariant(card, deltaX < 0 ? 1 : -1);
+      swipeState.suppressClickUntil = Date.now() + SWIPE_SUPPRESS_CLICK_MS;
+    },
+    { passive: true }
+  );
+
+  mediaFrame.addEventListener(
+    'click',
+    (event) => {
+      if (Date.now() < swipeState.suppressClickUntil) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    },
+    true
+  );
+}
+
 document.addEventListener('click', (event) => {
   const target = event.target instanceof Element ? event.target : null;
   const swatchButton = target?.closest(SWATCH_SELECTOR);
@@ -327,5 +444,6 @@ document.addEventListener('DOMContentLoaded', () => {
   for (const card of cards) {
     if (!(card instanceof HTMLElement)) continue;
     initializeCard(card);
+    bindTouchSwipe(card);
   }
 });

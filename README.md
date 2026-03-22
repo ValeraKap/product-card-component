@@ -12,6 +12,7 @@ Custom Shopify product card built from scratch in Dawn with TailwindCSS.
 - Variant swatches support desktop hover preview and click-to-commit behavior:
   - hover on desktop previews variant image/price/url
   - click fixes the selected variant state
+  - on touch devices, a horizontal swipe on the product image switches color variants (left/right)
 - UX polish (modern interaction layer):
   - swatches include subtle pulse feedback on hover (non-active only) to guide interaction
   - color tooltip appears on swatch hover/focus for faster variant recognition
@@ -35,6 +36,7 @@ Custom Shopify product card built from scratch in Dawn with TailwindCSS.
 
 - Sale state: displays `On Sale!` badge and markdown price (`compare_at_price` + sale price).
 - Variant swatches: hover previews a variant on desktop, and click switches/fixes variant imagery, URL, and pricing.
+- Mobile swipe: horizontal swipe over the product image switches variants without tapping swatches.
 - Variant hover image: hover over card image shows the secondary image for the selected variant.
 - Product info: heading/brand line (`custom.card_brand` with fallback to `product.title`), title, and pricing are rendered on every card.
 
