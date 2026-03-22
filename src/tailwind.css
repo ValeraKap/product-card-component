@@ -108,8 +108,6 @@
 
   .assessment-swatch {
     --assessment-swatch-size: 20px;
-    width: 20px;
-    height: 20px;
     width: var(--assessment-swatch-size);
     height: var(--assessment-swatch-size);
     border: 0;
