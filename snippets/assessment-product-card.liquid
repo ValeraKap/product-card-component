@@ -26,10 +26,10 @@
       </div>
     </div>
     <div class="flex w-full max-w-[246px] min-w-0 flex-col items-start gap-2">
-      <p class="text-[14px] font-normal leading-[16px] text-[#111111]" style="font-family: Roboto, sans-serif;">
+      <p class="text-[14px] font-normal leading-[16px] text-[#111111]">
         Demo Brand
       </p>
-      <p class="m-0 text-[16px] font-medium leading-[18px] text-[#0A4874]" style="font-family: Roboto, sans-serif;">
+      <p class="m-0 text-[16px] font-medium leading-[18px] text-[#0A4874]">
         {{ 'content.product_card_placeholder' | t }}
       </p>
     </div>
@@ -302,14 +302,13 @@
 
     <div class="flex w-full max-w-[246px] min-w-0 flex-col items-start gap-[2px]">
       <div class="flex w-full max-w-[246px] min-w-0 flex-col items-start gap-[2px]">
-        <p class="assessment-vendor-line m-0 w-full min-w-0 text-[14px] font-normal leading-[16px] text-[#111111] tracking-tight" style="font-family: Roboto, sans-serif;">
+        <p class="assessment-vendor-line m-0 w-full min-w-0 text-[14px] font-normal leading-[16px] text-[#111111] tracking-tight">
           {{ display_heading }}
         </p>
         <h3 class="my-1 w-full min-w-0 text-[16px]">
           <a
             href="{{ selected_variant.url }}"
             class="assessment-product-title assessment-product-title-wrap block w-full min-w-0 text-[16px] tracking-tight font-semibold leading-[18px] text-[#0A4874] no-underline hover:underline focus-visible:underline"
-            style="font-family: Roboto, sans-serif;"
             data-product-link
           >
             {{ display_title }}
@@ -320,14 +319,12 @@
       <p class="assessment-price-row my-1 flex items-start gap-2">
         <span
           class="assessment-compare-price text-[14px] font-normal leading-[16px] text-[#111111] line-through"
-          style="font-family: Roboto, sans-serif;"
           data-compare-price
         >
           {% if selected_on_sale %}{{ selected_variant.compare_at_price | money }}{% endif %}
         </span>
         <span
           class="assessment-current-price text-[14px] font-normal leading-[16px] text-[#111111]"
-          style="font-family: Roboto, sans-serif;"
           data-current-price
         >
           {{ selected_variant.price | money }}

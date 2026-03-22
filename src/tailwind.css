@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer components {
+  .assessment-product-card {
+    font-family: Roboto, sans-serif;
+  }
+
   .assessment-image-panel {
     border: 1px solid #e8e8e8;
     background: #ffffff;
