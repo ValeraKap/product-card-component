@@ -80,6 +80,29 @@
   </div>
 </div>
 
+{% stylesheet %}
+  /* Product list assessment override:
+     <768px: 2 cards
+     768px-1023px: 3 cards */
+  @media screen and (max-width: 767px) {
+    [data-testid='product-list'] .resource-list--grid {
+      --resource-list-columns-mobile: repeat(2, minmax(0, 1fr));
+      --resource-list-columns: repeat(2, minmax(0, 1fr));
+      --resource-list-columns-per-row: 2;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    [data-testid='product-list'] .resource-list--grid {
+      --resource-list-columns-mobile: repeat(3, minmax(0, 1fr));
+      --resource-list-columns: repeat(3, minmax(0, 1fr));
+      --resource-list-columns-per-row: 3;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "t:names.product_list",
