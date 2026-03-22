@@ -80,6 +80,37 @@
     transition: box-shadow 180ms ease;
   }
 
+  .assessment-swatch-tooltip {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 8px);
+    z-index: 15;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    max-width: 98px;
+    padding: 3px 8px;
+    border: 1px solid rgba(10, 72, 116, 0.22);
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.96);
+    color: #0a4874;
+    font-family: Roboto, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 14px;
+    white-space: nowrap;
+    box-shadow: 0 4px 10px rgba(17, 17, 17, 0.08);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translate(-50%, 4px);
+    transition:
+      opacity 160ms ease,
+      transform 160ms ease,
+      visibility 0s linear 160ms;
+  }
+
   @media (hover: hover) and (pointer: fine) {
     .assessment-swatch:not([data-active='true']):hover,
     .assessment-swatch:not([data-active='true']):focus-visible {
@@ -89,6 +120,14 @@
     .assessment-swatch:not([data-active='true']):hover .assessment-swatch-core,
     .assessment-swatch:not([data-active='true']):focus-visible .assessment-swatch-core {
       box-shadow: 0 0 0 2px rgba(10, 72, 116, 0.18);
+    }
+
+    .assessment-swatch:hover .assessment-swatch-tooltip,
+    .assessment-swatch:focus-visible .assessment-swatch-tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(-50%, 0);
+      transition-delay: 0ms, 0ms, 0ms;
     }
   }
 

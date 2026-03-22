@@ -12,6 +12,10 @@ Custom Shopify product card built from scratch in Dawn with TailwindCSS.
 - Variant swatches support desktop hover preview and click-to-commit behavior:
   - hover on desktop previews variant image/price/url
   - click fixes the selected variant state
+- UX polish (modern interaction layer):
+  - swatches include subtle pulse feedback on hover (non-active only) to guide interaction
+  - color tooltip appears on swatch hover/focus for faster variant recognition
+  - transitions are tuned to feel responsive and lightweight without visual noise
 - Sale badge/label includes a subtle Tailwind-based hover animation for desktop interactions.
 - Badge/label click-through behavior (for example, linking to a collection, filtered listing, or tag group page) is feasible as a next iteration, but was intentionally left out because it was not required in the assessment scope.
 - Internationalization-ready: static UI labels use locale translation keys (`| t`), and configurable metafield text can be localized via Shopify localization tools.
