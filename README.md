@@ -15,11 +15,14 @@ Custom Shopify product card built from scratch in Dawn with TailwindCSS.
 - UX polish (modern interaction layer):
   - swatches include subtle pulse feedback on hover (non-active only) to guide interaction
   - color tooltip appears on swatch hover/focus for faster variant recognition
+  - swatches wrap to a new line automatically when there are many color values
+  - on very small screens (`<390px`), swatch size is reduced for cleaner layout fit
   - transitions are tuned to feel responsive and lightweight without visual noise
 - Sale badge/label includes a subtle Tailwind-based hover animation for desktop interactions.
 - Sale badge includes a lightweight interaction hint:
   - cursor changes to pointer on hover
   - click shows a compact tooltip indicating that the badge can be connected to a promo/category URL in a future iteration
+  - tooltip is rendered as an overlay layer (outside image clipping) with adaptive top/bottom placement
 - Badge/label click-through behavior (for example, linking to a collection, filtered listing, or tag group page) is feasible as a next iteration, but was intentionally left out because it was not required in the assessment scope.
 - Internationalization-ready: static UI labels use locale translation keys (`| t`), and configurable metafield text can be localized via Shopify localization tools.
 - SEO/accessibility image handling: product images always receive a non-empty `alt` with fallbacks (`media alt -> product title -> localized "Product image"`), including after swatch-based variant switching.
@@ -71,12 +74,14 @@ For active Tailwind development:
 
 ## Metafield Setup (Product)
 
-- Namespace and key: `custom.sale_badge_mode`
-- Type: `Single line text`
-- Allowed values:
+- `custom.sale_badge_mode` (Single line text):
   - `default` -> badge follows sale logic (`compare_at_price > price`) + legacy `custom.sale_badge_enabled`
   - `force_show` -> always show badge
   - `force_hide` -> always hide badge
+- `custom.sale_badge_text` (Single line text):
+  - optional badge label override (falls back to localized default when empty)
+- `custom.sale_badge_enabled` (Boolean):
+  - legacy manual badge enable fallback used when mode is `default`
 
 ## Main Files Changed
 
@@ -94,3 +99,5 @@ For active Tailwind development:
 - GitHub repo: https://github.com/ValeraKap/product-card-component
 - Working prototype: https://we1ckj-07.myshopify.com/
 - Preview password: `steere`
+
+> Note: If you need any additional functionality or refinements, feel free to reach out. I am open to further iterations 💻.
