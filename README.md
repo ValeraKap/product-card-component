@@ -4,12 +4,15 @@ Custom Shopify product card built from scratch in Dawn with TailwindCSS.
 
 ## Current Functionality
 
-- Pixel-focused product card layout based on the provided [Figma design](https://www.figma.com/design/8OoguRzaKPQU6AxxyjNDrQ/FE-Technical-Assessment?node-id=0-1&p=f&t=xJ9ClvL2mAmWT1I8-0).
+- Pixel-focused product card layout based on the provided <a href="https://www.figma.com/design/8OoguRzaKPQU6AxxyjNDrQ/FE-Technical-Assessment?node-id=0-1&p=f&t=xJ9ClvL2mAmWT1I8-0" target="_blank" rel="noopener noreferrer">Figma design</a>.
 
 ![Pixel-focused product card layout](README-assets/readme-screenshot-01-pixel-focused.png)
 
 - Sale badge supports both automatic sale detection (`compare_at_price > price`) and manual control via metafields:
   - `custom.sale_badge_text` (single line text): `Sale!` (default), examples: `Limited Offer`, `Final Sale`
+  
+![Sale badge text metafield definition](README-assets/readme-screenshot-08-sale-badge-text-definition.png)
+
   - `custom.sale_badge_mode` (single line text): `default`, `force_show`, `force_hide`
   - `custom.sale_badge_enabled` (boolean, legacy fallback): manual/forced badge activation even if there is no `compare_at_price` when mode is `default`
 
@@ -50,6 +53,8 @@ Custom Shopify product card built from scratch in Dawn with TailwindCSS.
 - Performance-oriented image delivery: product images use lazy loading, intrinsic dimensions (`width`/`height`), `decoding="async"`, and responsive `srcset/sizes` (also updated on variant switch) to reduce payload and improve PageSpeed.
 - Product text supports display fallbacks for heading/title (including product type and optional metafields).
 - `Plain T-shirt` is currently sourced from `Product type`; if needed, this can be overridden via metafields.
+
+![Product type field in Shopify admin](README-assets/readme-screenshot-06-product-type-field.png)
 
 ## Implemented User Stories
 
@@ -101,6 +106,9 @@ For active Tailwind development:
   - `default` -> badge follows sale logic (`compare_at_price > price`) + legacy `custom.sale_badge_enabled`
   - `force_show` -> always show badge
   - `force_hide` -> always hide badge
+
+![Sale badge mode metafield definition](README-assets/readme-screenshot-07-sale-badge-mode-definition.png)
+
 - `custom.sale_badge_text` (Single line text):
   - optional badge label override (falls back to localized default when empty)
 - `custom.sale_badge_enabled` (Boolean):
