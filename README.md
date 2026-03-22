@@ -4,15 +4,27 @@ Custom Shopify product card built from scratch in Dawn with TailwindCSS.
 
 ## Current Functionality
 
-- Pixel-focused product card layout based on the provided Figma design.
+- Pixel-focused product card layout based on the provided [Figma design](https://www.figma.com/design/8OoguRzaKPQU6AxxyjNDrQ/FE-Technical-Assessment?node-id=0-1&p=f&t=xJ9ClvL2mAmWT1I8-0).
+
+![Pixel-focused product card layout](README-assets/readme-screenshot-01-pixel-focused.png)
+
 - Sale badge supports both automatic sale detection (`compare_at_price > price`) and manual control via metafields:
   - `custom.sale_badge_text` (single line text): `Sale!` (default), examples: `Limited Offer`, `Final Sale`
   - `custom.sale_badge_mode` (single line text): `default`, `force_show`, `force_hide`
   - `custom.sale_badge_enabled` (boolean, legacy fallback): manual/forced badge activation even if there is no `compare_at_price` when mode is `default`
+
+![Sale badge mode metafield](README-assets/readme-screenshot-03-sale-badge-mode.png)
+![Sale badge text metafield](README-assets/readme-screenshot-04-sale-badge-text.png)
+
+![Variant swatches and product card states](README-assets/readme-screenshot-02-variant-swatches.png)
+
 - Variant swatches support desktop hover preview and click-to-commit behavior:
   - hover on desktop previews variant image/price/url
+  
+![Desktop hover preview demo](README-assets/readme-demo-01-desktop-hover-preview.gif)
+
   - click fixes the selected variant state
-  - on touch devices, a horizontal swipe on the product image switches color variants (left/right)
+  - on touch devices, a horizontal swipe on the product image switches color variants (left/right), tested on iPhone
 - UX polish (modern interaction layer):
   - swatches include subtle pulse feedback on hover (non-active only) to guide interaction
   - color tooltip appears on swatch hover/focus for faster variant recognition
