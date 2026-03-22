@@ -36,7 +36,7 @@ Custom Shopify product card built from scratch in Dawn with TailwindCSS.
 - Sale state: displays `On Sale!` badge and markdown price (`compare_at_price` + sale price).
 - Variant swatches: hover previews a variant on desktop, and click switches/fixes variant imagery, URL, and pricing.
 - Variant hover image: hover over card image shows the secondary image for the selected variant.
-- Product info: brand (`product.vendor`), title, and pricing are rendered on every card.
+- Product info: heading/brand line (`custom.card_brand` with fallback to `product.title`), title, and pricing are rendered on every card.
 
 ## Tech Stack
 
