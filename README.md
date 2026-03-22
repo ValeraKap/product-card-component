@@ -25,9 +25,15 @@ Custom Shopify product card built from scratch in Dawn with TailwindCSS.
 
   - click fixes the selected variant state
   - on touch devices, a horizontal swipe on the product image switches color variants (left/right), tested on iPhone
+
+![Mobile swipe demo (tested on iPhone)](README-assets/readme-demo-02-mobile-swipe-iphone.gif)
+
 - UX polish (modern interaction layer):
   - swatches include subtle pulse feedback on hover (non-active only) to guide interaction
   - color tooltip appears on swatch hover/focus for faster variant recognition
+
+![Swatch color tooltip demo](README-assets/readme-demo-03-swatch-tooltip-hover.gif)
+
   - swatches wrap to a new line automatically when there are many color values
   - on very small screens (`<390px`), swatch size is reduced for cleaner layout fit
   - transitions are tuned to feel responsive and lightweight without visual noise
@@ -52,6 +58,8 @@ Custom Shopify product card built from scratch in Dawn with TailwindCSS.
 - Mobile swipe: horizontal swipe over the product image switches variants without tapping swatches.
 - Variant hover image: hover over card image shows the secondary image for the selected variant.
 - Product info: heading/brand line (`custom.card_brand` with fallback to `product.title`), title, and pricing are rendered on every card.
+
+![Product info and pricing rendering](README-assets/readme-demo-04-product-info-pricing.gif)
 
 ## Tech Stack
 
@@ -108,6 +116,8 @@ For active Tailwind development:
 - `snippets/scripts.liquid`
 - `blocks/_product-card.liquid`
 - `blocks/product-card.liquid`
+
+![Main files changed overview](README-assets/readme-screenshot-05-main-files-changed.png)
 
 ## Submission
 
