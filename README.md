@@ -2,6 +2,12 @@
 
 Custom Shopify product card built from scratch in Dawn with TailwindCSS.
 
+<a href="https://drive.google.com/file/d/1ZBsg2O8wxxAcqyFIHIPQ6wd8gfFn_Yop/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+  <img src="README-assets/readme-screenshot-10-full-demo-cover.png" alt="Full demo video preview" width="100%">
+</a>
+
+Full demo video (Google Drive): <a href="https://drive.google.com/file/d/1ZBsg2O8wxxAcqyFIHIPQ6wd8gfFn_Yop/view?usp=sharing" target="_blank" rel="noopener noreferrer">Open in new tab</a>
+
 ## Current Functionality
 
 - Pixel-focused product card layout based on the provided <a href="https://www.figma.com/design/8OoguRzaKPQU6AxxyjNDrQ/FE-Technical-Assessment?node-id=0-1&p=f&t=xJ9ClvL2mAmWT1I8-0" target="_blank" rel="noopener noreferrer">Figma design</a>.
