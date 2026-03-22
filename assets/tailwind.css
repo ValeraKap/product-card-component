@@ -479,6 +479,10 @@
   display: none;
 }
 
+.aspect-\[315\/270\] {
+  aspect-ratio: 315/270;
+}
+
 .h-5 {
   height: 1.25rem;
 }
@@ -493,6 +497,14 @@
 
 .h-full {
   height: 100%;
+}
+
+.h-auto {
+  height: auto;
+}
+
+.h-\[270px\] {
+  height: 270px;
 }
 
 .w-5 {
@@ -804,6 +816,10 @@
 
   .md\:top-5 {
     top: 1.25rem;
+  }
+
+  .md\:aspect-\[315\/340\] {
+    aspect-ratio: 315/340;
   }
 
   .md\:h-\[29\.45px\] {
