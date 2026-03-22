@@ -262,7 +262,7 @@
     {% if color_option != blank %}
       <div
         class="flex w-full max-w-[246px] items-center p-0"
-        role="list"
+        role="group"
         aria-label="{{ color_option.name | escape }}"
         data-swatch-list
       >
@@ -330,7 +330,6 @@
           <button
             type="button"
             class="assessment-swatch relative flex h-5 w-5 items-center justify-center rounded-full bg-transparent p-0 focus-visible:outline-none"
-            role="listitem"
             aria-label="{{ option_value.name | escape }}"
             aria-pressed="{% if is_active %}true{% else %}false{% endif %}"
             data-swatch-button

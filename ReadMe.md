@@ -49,6 +49,14 @@ Custom Shopify product card built from scratch in Dawn with TailwindCSS.
 - These classes are used for pixel-perfect Figma values, repeated style tokens, and stateful selectors/pseudo-elements (`:hover`, `:focus-visible`, active swatch ring, line clamp).
 - This keeps the Liquid template cleaner and avoids overloading markup with long duplicated utility strings while still staying within a Tailwind workflow.
 
+## Accessibility Notes
+
+- Product images include non-empty `alt` fallbacks (`media alt -> product title -> localized fallback`).
+- Swatch controls are implemented as real buttons with `aria-label` and `aria-pressed` state updates on selection.
+- Swatch container uses labeled grouping (`role="group"` + `aria-label`) for screen-reader context.
+- Sale badge interaction uses `aria-expanded` and tooltip visibility state (`aria-hidden`) updates.
+- Keyboard focus states are explicitly styled via `focus-visible`.
+
 ## Local Setup
 
 1. Install dependencies:
@@ -56,7 +64,7 @@ Custom Shopify product card built from scratch in Dawn with TailwindCSS.
 2. Build Tailwind output:
    `npm run build:css`
 3. Start Shopify theme dev server:
-   `shopify theme dev`
+   `shopify theme dev --store=we1ckj-07.myshopify.com`
 
 For active Tailwind development:
 `npm run watch:css`
