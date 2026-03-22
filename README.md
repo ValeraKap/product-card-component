@@ -129,6 +129,8 @@ For active Tailwind development:
 
 ## Submission
 
+![GitHub repository submission view](README-assets/readme-screenshot-09-submission-github.png)
+
 - GitHub repo: https://github.com/ValeraKap/product-card-component
 - Working prototype: https://we1ckj-07.myshopify.com/
 - Preview password: `steere`
