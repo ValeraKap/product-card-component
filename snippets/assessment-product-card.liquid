@@ -244,7 +244,7 @@
             {{ secondary_fallback | image_url: width: 900 }} 900w
           {%- endcapture %}
           <img
-            class="absolute inset-0 z-0 h-full w-full object-contain p-[0px]{% if selected_secondary == blank %} hidden{% endif %}"
+            class="absolute inset-0 z-0 h-full w-full object-contain p-0{% if selected_secondary == blank %} hidden{% endif %}"
             data-secondary-image
             src="{{ secondary_fallback | image_url: width: 900 }}"
             srcset="{{ secondary_fallback_srcset | strip }}"
