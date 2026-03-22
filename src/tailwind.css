@@ -107,8 +107,11 @@
   }
 
   .assessment-swatch {
+    --assessment-swatch-size: 20px;
     width: 20px;
     height: 20px;
+    width: var(--assessment-swatch-size);
+    height: var(--assessment-swatch-size);
     border: 0;
     padding: 0;
     background: transparent;
@@ -117,8 +120,8 @@
   }
 
   .assessment-swatch-core {
-    width: 20px;
-    height: 20px;
+    width: 100%;
+    height: 100%;
     border-radius: 9999px;
     transition: box-shadow 180ms ease;
   }
@@ -194,6 +197,17 @@
     border: 1px solid #0a4874;
     border-radius: 9999px;
     pointer-events: none;
+  }
+
+  @media (max-width: 389px) {
+    .assessment-swatch {
+      --assessment-swatch-size: 18px;
+    }
+
+    .assessment-swatch[data-active='true']::after,
+    .assessment-swatch:focus-visible::after {
+      inset: -1px;
+    }
   }
 
   @keyframes swatchPulse {
