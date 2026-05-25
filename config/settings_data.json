@@ -78,8 +78,8 @@
     "variant_button_width": "equal-width-buttons",
     "content_for_index": [],
     "blocks": {
-      "16605207545338212596": {
-        "type": "shopify://apps/aov-ai-bundle/blocks/aov-offer/0335d423-143c-4ad7-b224-99a1db74a9ee",
+      "10605107893285769442": {
+        "type": "shopify://apps/amp-bundles/blocks/amp-bundles-embed/7161efe5-6fe7-4f63-bef9-72179702263a",
         "disabled": false,
         "settings": {}
       }
@@ -131,7 +131,7 @@
           "foreground": "#000000cf",
           "primary": "#000000cf",
           "primary_hover": "#ffffff",
-          "border": "#DFDFDF",
+          "border": "#dfdfdf",
           "shadow": "#000000",
           "primary_button_background": "#000000",
           "primary_button_text": "#ffffff",
