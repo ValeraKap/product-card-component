@@ -493,12 +493,132 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
+    },
+    "17797050281c16adb7": {
+      "type": "_blocks",
+      "blocks": {
+        "aov_ai_bundle_offer_bundle_builder_iqkKAG": {
+          "type": "shopify://apps/aov-ai-bundle/blocks/offer-bundle-builder/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "aov_ai_bundle_offer_bundle_builder_iqkKAG"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "17797051052698681d": {
+      "type": "_blocks",
+      "blocks": {
+        "aov_ai_bundle_offer_fixed_qaf479": {
+          "type": "shopify://apps/aov-ai-bundle/blocks/offer-fixed/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "aov_ai_bundle_offer_fixed_qaf479"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "1779705115d4904f68": {
+      "type": "_blocks",
+      "blocks": {
+        "aov_ai_bundle_offer_volume_VP7pGH": {
+          "type": "shopify://apps/aov-ai-bundle/blocks/offer-volume/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "aov_ai_bundle_offer_volume_VP7pGH"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
     }
   },
   "order": [
     "main",
     "product_recommendations_qggXJq",
     "1779704989c8bd4ff8",
-    "17797050060e4feb11"
+    "17797050060e4feb11",
+    "17797050281c16adb7",
+    "17797051052698681d",
+    "1779705115d4904f68"
   ]
 }
