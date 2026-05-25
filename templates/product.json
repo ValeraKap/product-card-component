@@ -12,6 +12,22 @@
     "main": {
       "type": "product-information",
       "blocks": {
+        "aov_ai_bundle_mix_match_offer_inline_hMp9mV": {
+          "type": "shopify://apps/aov-ai-bundle/blocks/mix-match-offer-inline/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "settings": {}
+        },
+        "aov_ai_bundle_offer_inline_YNGRfU": {
+          "type": "shopify://apps/aov-ai-bundle/blocks/offer-inline/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "settings": {}
+        },
+        "aov_ai_bundle_offer_fixed_4KPjPf": {
+          "type": "shopify://apps/aov-ai-bundle/blocks/offer-fixed/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "settings": {}
+        },
+        "aov_ai_bundle_offer_bundle_builder_WX7DLH": {
+          "type": "shopify://apps/aov-ai-bundle/blocks/offer-bundle-builder/0335d423-143c-4ad7-b224-99a1db74a9ee",
+          "settings": {}
+        },
         "media-gallery": {
           "type": "_product-media-gallery",
           "static": true,
@@ -247,6 +263,10 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "aov_ai_bundle_offer_volume_bPTr9r": {
+              "type": "shopify://apps/aov-ai-bundle/blocks/offer-volume/0335d423-143c-4ad7-b224-99a1db74a9ee",
+              "settings": {}
             }
           },
           "block_order": [
@@ -254,10 +274,17 @@
             "divider_VJhene",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
-            "text_aEtTtq"
+            "text_aEtTtq",
+            "aov_ai_bundle_offer_volume_bPTr9r"
           ]
         }
       },
+      "block_order": [
+        "aov_ai_bundle_mix_match_offer_inline_hMp9mV",
+        "aov_ai_bundle_offer_inline_YNGRfU",
+        "aov_ai_bundle_offer_fixed_4KPjPf",
+        "aov_ai_bundle_offer_bundle_builder_WX7DLH"
+      ],
       "settings": {
         "content_width": "content-center-aligned",
         "desktop_media_position": "left",
